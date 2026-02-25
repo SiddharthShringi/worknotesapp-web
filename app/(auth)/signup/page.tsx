@@ -17,9 +17,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { signup } from "@/lib/api/auth.api";
 import { SignupParams, SignupUser } from "@/types/auth.types";
+import { useAuth } from "@/lib/context/AuthContext";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { storeToken } = useAuth();
 
   const {
     register,
@@ -42,8 +44,14 @@ export default function SignupPage() {
         );
       }
     },
-    onSuccess: () => {
-      toast("Signup successful", { position: "bottom-right" });
+    onSuccess: (response) => {
+      const authHeader = response.headers["authorization"] as string;
+
+      if (authHeader) {
+        const token = authHeader.split(" ")[1];
+        storeToken(token);
+      }
+      toast.success("Signup successful");
       router.push("/");
     },
   });

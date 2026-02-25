@@ -17,8 +17,10 @@ import { login } from "@/lib/api/auth.api";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 export default function SignupPage() {
+  const { storeToken } = useAuth();
   const {
     register,
     handleSubmit,
@@ -42,9 +44,16 @@ export default function SignupPage() {
         );
       }
     },
-    onSuccess: () => {
-      toast("Signup successful", { position: "bottom-right" });
-      router.push("/");
+    onSuccess: (response) => {
+      const authHeader = response.headers["authorization"] as string;
+
+      if (authHeader) {
+        const token = authHeader.split(" ")[1];
+        storeToken(token);
+      }
+      console.log({ response });
+      toast.success("Login successful");
+      router.replace("/");
     },
   });
 
