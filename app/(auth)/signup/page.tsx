@@ -27,8 +27,12 @@ export default function SignupPage() {
     register,
     handleSubmit,
     setError,
+    getValues,
     formState: { errors },
+    clearErrors,
   } = useForm<SignupUser>();
+
+  // Removed top-level watch("password")
 
   const mutation = useMutation({
     mutationFn: signup,
@@ -52,7 +56,7 @@ export default function SignupPage() {
         storeToken(token);
       }
       toast.success("Signup successful");
-      router.push("/");
+      router.replace("/");
     },
   });
 
@@ -66,7 +70,7 @@ export default function SignupPage() {
         password_confirmation: data.passwordConfirmation,
       },
     };
-
+    clearErrors();
     mutation.mutate(payload);
   };
 
@@ -81,22 +85,43 @@ export default function SignupPage() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="name" className="text-xs">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+            noValidate
+          >
+            <div className="space-y-2">
+              <Label htmlFor="firstName" className="text-xs">
                 First Name
               </Label>
               <Input
-                {...register("firstName")}
+                {...register("firstName", {
+                  required: "First name is required",
+                })}
                 className="py-5"
                 id="firstName"
               />
+              {errors.firstName && (
+                <div className="text-destructive text-sm">
+                  {errors.firstName.message}
+                </div>
+              )}
             </div>
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="name" className="text-xs">
+
+            <div className="space-y-2">
+              <Label htmlFor="lastName" className="text-xs">
                 Last Name
               </Label>
-              <Input {...register("lastName")} className="py-5" id="lastName" />
+              <Input
+                {...register("lastName", { required: "Last name is required" })}
+                className="py-5"
+                id="lastName"
+              />
+              {errors.lastName && (
+                <div className="text-destructive text-sm">
+                  {errors.lastName.message}
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -129,6 +154,10 @@ export default function SignupPage() {
               <Input
                 {...register("password", {
                   required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
                 })}
                 className="py-5"
                 id="password"
@@ -147,7 +176,11 @@ export default function SignupPage() {
               </Label>
               <Input
                 {...register("passwordConfirmation", {
-                  required: true,
+                  required: "Password confirmation is required",
+                  validate: (value) => {
+                    const passwordValue = getValues("password");
+                    return passwordValue === value || "Passwords do not match";
+                  },
                 })}
                 className="py-5"
                 id="passwordConfirmation"

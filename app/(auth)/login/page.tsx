@@ -19,7 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
 
-export default function SignupPage() {
+export default function LoginPage() {
   const { storeToken } = useAuth();
   const {
     register,
@@ -33,15 +33,16 @@ export default function SignupPage() {
   const mutation = useMutation({
     mutationFn: login,
     onError: (error: any) => {
-      if (error?.response?.data?.errors) {
-        Object.entries(error.response.data.errors).forEach(
-          ([field, message]) => {
-            setError(field as keyof LoginUser, {
-              type: "server",
-              message: message as string,
-            });
-          },
-        );
+      const errorData = error.response?.data;
+
+      if (error.response?.status === 401) {
+        const message = errorData?.error || "Invalid email or password";
+        toast.error(message);
+
+        // Set form errors so the fields highlight red
+        setError("email", { type: "server", message: "" });
+        setError("password", { type: "server", message: message });
+        return;
       }
     },
     onSuccess: (response) => {
@@ -51,7 +52,6 @@ export default function SignupPage() {
         const token = authHeader.split(" ")[1];
         storeToken(token);
       }
-      console.log({ response });
       toast.success("Login successful");
       router.replace("/");
     },
@@ -78,7 +78,11 @@ export default function SignupPage() {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4"
+            noValidate
+          >
             <div className="space-y-2">
               <Label htmlFor="email" className="text-xs">
                 Email
@@ -91,7 +95,7 @@ export default function SignupPage() {
                     message: "Invalid email format",
                   },
                 })}
-                className="h-12 px-4"
+                className="py-5"
                 id="email"
                 type="email"
               />
@@ -110,7 +114,7 @@ export default function SignupPage() {
                 {...register("password", {
                   required: "Password is required",
                 })}
-                className="h-12 px-4"
+                className="py-5"
                 id="password"
                 type="password"
               />

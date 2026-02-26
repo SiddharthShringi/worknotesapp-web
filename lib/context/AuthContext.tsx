@@ -5,6 +5,7 @@ import { getToken, setToken, removeToken } from "@/lib/auth";
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  isAuthReady: boolean;
   storeToken: (token: string) => void;
   revokeToken: () => void;
 }
@@ -12,9 +13,14 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return !!getToken();
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthReady, setIsAuthReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = getToken();
+    setIsAuthenticated(!!token);
+    setIsAuthReady(true);
+  }, []);
 
   const storeToken = (token: string) => {
     setToken(token);
@@ -27,7 +33,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, storeToken, revokeToken }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, isAuthReady, storeToken, revokeToken }}
+    >
       {children}
     </AuthContext.Provider>
   );
