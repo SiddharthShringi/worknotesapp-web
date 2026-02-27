@@ -1,16 +1,3 @@
-export interface SignupUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-}
-
-export interface LoginUser {
-  email: string;
-  password: string;
-}
-
 export interface SignupParams {
   user: {
     first_name: string;
