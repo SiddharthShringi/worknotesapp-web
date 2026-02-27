@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getToken, setToken, removeToken } from "@/lib/auth";
+import { getToken, setToken, removeToken } from "@/lib/utils/auth";
 
 interface AuthContextType {
   isAuthenticated: boolean;
