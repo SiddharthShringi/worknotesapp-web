@@ -95,7 +95,11 @@ export default function SignupPage() {
           registration={register("passwordConfirmation")}
           error={errors.passwordConfirmation?.message}
         />
-        <Button type="submit" className="w-full h-12">
+        <Button
+          type="submit"
+          className="w-full h-12"
+          disabled={mutation.isPending}
+        >
           {mutation.isPending ? "Signing up" : "Register"}
         </Button>
         <div className="flex items-center justify-center text-xs">

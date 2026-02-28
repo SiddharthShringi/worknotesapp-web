@@ -73,8 +73,12 @@ export default function LoginPage() {
           registration={register("password")}
           error={errors.password?.message}
         />
-        <Button type="submit" className="w-full h-12">
-          Sign In
+        <Button
+          type="submit"
+          className="w-full h-12"
+          disabled={mutation.isPending}
+        >
+          {mutation.isPending ? "Signing in" : "Sign In"}
         </Button>
         <div className="flex items-center justify-center text-xs">
           <p className="pr-1">Don&apos;t Have an Account?</p>
