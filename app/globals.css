@@ -80,7 +80,7 @@
 }
 
 :root {
-  --brand-yellow: oklch(0.72 0.14 93.21);
+  --brand-yellow: oklch(77.983% 0.15459 83.665);
   --brand-blue: oklch(0.55 0.1 260.24);
   --brand-graphite: oklch(0.35 0.02 277.11);
   --brand-lime-green: oklch(0.8987 0.1178 133.63);
@@ -116,9 +116,6 @@
   --sidebar-accent-foreground: oklch(0.3211 0 0);
   --sidebar-border: oklch(0.8576 0 0);
   --sidebar-ring: oklch(0.4891 0 0);
-  --brand-yellow: oklch(0.8316 0.1453 93.21);
-  --brand-blue: oklch(0.5988 0.1009 260.24);
-  --brand-graphite: oklch(0.3197 0.0197 277.11);
   --destructive-foreground: oklch(1 0 0);
   --font-sans: Montserrat, sans-serif;
   --font-serif: Georgia, serif;
