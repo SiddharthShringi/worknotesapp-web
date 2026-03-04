@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { Path, UseFormSetError, FieldValues } from "react-hook-form";
-import { snakeToCamel } from "../utils/utils";
+import { snakeToCamel } from "../utils";
 
 export type ErrorResponse = {
   error?: string;
