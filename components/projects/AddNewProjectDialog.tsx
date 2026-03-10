@@ -1,7 +1,14 @@
-import { useForm } from "react-hook-form";
+"use client";
+
+import { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
+import { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+
 import {
   Dialog,
   DialogClose,
@@ -13,28 +20,70 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ColorPicker } from "@/components/projects/ColorPicker";
+import { ProjectParams } from "@/types/project.types";
+import {
+  ProjectFormData,
+  projectSchema,
+} from "@/lib/validations/project.schema";
+import { FormField } from "../FormField";
+import { createProject } from "@/lib/api/project.api";
+import { mapErrors, ErrorResponse } from "@/lib/api/errorMapping";
 
 export function AddNewProjectDialog() {
+  const [open, setOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
+    control,
     setError,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<ProjectFormData>({
+    resolver: zodResolver(projectSchema),
+  });
+
+  const mutation = useMutation({
+    mutationFn: createProject,
+    onError: (error: AxiosError<ErrorResponse>) => {
+      const message = mapErrors<ProjectFormData>(error, setError);
+      toast.error(message || "Failed to create project. Please try again.");
+    },
+    onSuccess: () => {
+      toast.success("Project created successfully");
+      reset();
+      setOpen(false);
+    },
+  });
+
+  const onSubmit: SubmitHandler<ProjectFormData> = (data) => {
+    const payload: ProjectParams = {
+      project: {
+        name: data.name,
+        description: data.description,
+        color: data.color,
+      },
+    };
+    console.log(payload);
+    mutation.mutate(payload);
+  };
 
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button className="hover:bg-brand-yellow text-background bg-foreground">
-            <Plus className="h-4 w-4" />
-            <p>Add New Project</p>
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-sm">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="hover:bg-brand-yellow text-background bg-foreground">
+          <Plus className="h-4 w-4" />
+          <p>Add New Project</p>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-sm">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6"
+          noValidate
+        >
           <DialogHeader>
             <DialogTitle>Add new Project</DialogTitle>
             <DialogDescription>
@@ -42,21 +91,29 @@ export function AddNewProjectDialog() {
             </DialogDescription>
           </DialogHeader>
           <FieldGroup>
-            <Field>
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name" name="name" placeholder="Project Name" />
-            </Field>
-            <Field>
-              <Label htmlFor="username-1">Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                placeholder="Project description"
-              />
-            </Field>
+            <FormField
+              label="Name"
+              id="name"
+              registration={register("name")}
+              error={errors.name?.message}
+            />
+            <FormField
+              label="Description"
+              id="description"
+              textarea
+              registration={register("description")}
+              error={errors.description?.message}
+            />
             <Field>
               <Label htmlFor="username-1">Color</Label>
-              <ColorPicker value="blue" onChange={() => {}} />
+              <Controller
+                control={control}
+                name="color"
+                defaultValue="blue"
+                render={({ field }) => (
+                  <ColorPicker value={field.value} onChange={field.onChange} />
+                )}
+              />
             </Field>
           </FieldGroup>
           <DialogFooter>
@@ -65,8 +122,8 @@ export function AddNewProjectDialog() {
             </DialogClose>
             <Button type="submit">Add</Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }

@@ -2,20 +2,21 @@
 
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
+
 import { Button } from "@/components/ui/button";
 import { LoginParams } from "@/types/auth.types";
 import { login } from "@/lib/api/auth.api";
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
 import { handleStoreToken } from "@/lib/utils/handleAuthSuccess";
 import { loginSchema, LoginFormData } from "@/lib/validations/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
 import { mapErrors, ErrorResponse } from "@/lib/api/errorMapping";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { FormField } from "@/components/auth/FormField";
+import { FormField } from "@/components/FormField";
 
 export default function LoginPage() {
   const { storeToken } = useAuth();

@@ -21,3 +21,5 @@ export const projectSchema = z.object({
     "rose",
   ]),
 });
+
+export type ProjectFormData = z.infer<typeof projectSchema>;

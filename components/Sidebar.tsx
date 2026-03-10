@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderMinus, Clock8, NotebookPen } from "lucide-react";
+import { Clock8, NotebookPen, FileText } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export default function Sidebar() {
         <nav className="flex flex-col gap-1">
           <Link href="/projects" className={linkClass("/projects")}>
             <span>
-              <FolderMinus className="h-4 w-4" />
+              <FileText className="h-4 w-4" />
             </span>
             <span className="text-base">Projects</span>
           </Link>
