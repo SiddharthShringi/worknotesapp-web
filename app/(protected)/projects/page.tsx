@@ -1,6 +1,7 @@
 "use client";
 
 import { AddNewProjectDialog } from "@/components/projects/AddNewProjectDialog";
+import { ProjectsTable } from "@/components/projects/ProjectsTable";
 
 function ProjectPage() {
   return (
@@ -9,6 +10,7 @@ function ProjectPage() {
         <h1 className="text-3xl font-bold">Projects</h1>
         <AddNewProjectDialog />
       </div>
+      <ProjectsTable />
     </div>
   );
 }

@@ -8,5 +8,5 @@ export const createProject = async (params: ProjectParams) => {
 
 export const getProjects = async () => {
   const response = await axiosInstance.get("api/v1/projects");
-  return response;
+  return response.data;
 };

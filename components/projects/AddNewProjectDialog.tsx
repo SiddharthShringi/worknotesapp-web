@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { AxiosError } from "axios";
 import { Button } from "@/components/ui/button";
@@ -45,6 +45,8 @@ export function AddNewProjectDialog() {
     resolver: zodResolver(projectSchema),
   });
 
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: createProject,
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -54,6 +56,7 @@ export function AddNewProjectDialog() {
     onSuccess: () => {
       toast.success("Project created successfully");
       reset();
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       setOpen(false);
     },
   });
@@ -70,8 +73,15 @@ export function AddNewProjectDialog() {
     mutation.mutate(payload);
   };
 
+  const handleOpenChange = (isOpen: boolean) => {
+    if (!isOpen) {
+      reset();
+    }
+    setOpen(isOpen);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button className="hover:bg-brand-yellow text-background bg-foreground">
           <Plus className="h-4 w-4" />
@@ -85,7 +95,7 @@ export function AddNewProjectDialog() {
           noValidate
         >
           <DialogHeader>
-            <DialogTitle>Add new Project</DialogTitle>
+            <DialogTitle>Add New Project</DialogTitle>
             <DialogDescription>
               Fill in the details for your new project.
             </DialogDescription>
