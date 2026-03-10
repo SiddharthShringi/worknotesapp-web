@@ -9,7 +9,7 @@ type Props = {
 
 export function ColorPicker({ value, onChange }: Props) {
   return (
-    <div className="grid grid-cols-6 gap-y-2">
+    <div className="grid grid-cols-6 gap-2">
       {PROJECT_COLORS.map((color) => {
         const selected = value === color.value;
 

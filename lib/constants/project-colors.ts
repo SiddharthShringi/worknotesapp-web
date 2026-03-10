@@ -12,3 +12,7 @@ export const PROJECT_COLORS = [
   { name: "teal", value: "teal", bg: "bg-project-teal" },
   { name: "rose", value: "rose", bg: "bg-project-rose" },
 ];
+
+export const PROJECT_COLOR_MAP = Object.fromEntries(
+  PROJECT_COLORS.map((c) => [c.value, c.bg]),
+);
