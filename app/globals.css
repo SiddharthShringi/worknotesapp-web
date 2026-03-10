@@ -77,6 +77,18 @@
   --shadow-opacity: var(--shadow-opacity);
   --color-shadow-color: var(--shadow-color);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-project-blue: var(--project-blue);
+  --color-project-green: var(--project-green);
+  --color-project-amber: var(--project-amber);
+  --color-project-red: var(--project-red);
+  --color-project-violet: var(--project-violet);
+  --color-project-cyan: var(--project-cyan);
+  --color-project-pink: var(--project-pink);
+  --color-project-lime: var(--project-lime);
+  --color-project-orange: var(--project-orange);
+  --color-project-indigo: var(--project-indigo);
+  --color-project-teal: var(--project-teal);
+  --color-project-rose: var(--project-rose);
 }
 
 :root {
@@ -108,6 +120,18 @@
   --chart-3: oklch(0.6534 0 0);
   --chart-4: oklch(0.7316 0 0);
   --chart-5: oklch(0.8078 0 0);
+  --project-blue: oklch(0.63 0.22 260);
+  --project-green: oklch(0.68 0.2 145);
+  --project-amber: oklch(0.76 0.19 85);
+  --project-red: oklch(0.63 0.24 25);
+  --project-violet: oklch(0.6 0.23 305);
+  --project-cyan: oklch(0.74 0.16 205);
+  --project-pink: oklch(0.67 0.22 350);
+  --project-lime: oklch(0.75 0.2 120);
+  --project-orange: oklch(0.7 0.21 50);
+  --project-indigo: oklch(0.58 0.21 275);
+  --project-teal: oklch(0.64 0.14 175);
+  --project-rose: oklch(0.67 0.22 355);
   --sidebar: oklch(0.937 0 0);
   --sidebar-foreground: oklch(0.3211 0 0);
   --sidebar-primary: oklch(0.4891 0 0);
@@ -171,6 +195,18 @@
   --chart-3: oklch(0.5452 0 0);
   --chart-4: oklch(0.4604 0 0);
   --chart-5: oklch(0.3715 0 0);
+  --project-blue: oklch(0.72 0.18 260);
+  --project-green: oklch(0.75 0.17 145);
+  --project-amber: oklch(0.82 0.17 85);
+  --project-red: oklch(0.72 0.2 25);
+  --project-violet: oklch(0.7 0.2 305);
+  --project-cyan: oklch(0.8 0.13 205);
+  --project-pink: oklch(0.75 0.19 350);
+  --project-lime: oklch(0.82 0.18 120);
+  --project-orange: oklch(0.76 0.19 50);
+  --project-indigo: oklch(0.68 0.18 275);
+  --project-teal: oklch(0.72 0.12 175);
+  --project-rose: oklch(0.75 0.19 355);
   --sidebar: oklch(0.2393 0 0);
   --sidebar-foreground: oklch(0.8853 0 0);
   --sidebar-primary: oklch(0.7058 0 0);

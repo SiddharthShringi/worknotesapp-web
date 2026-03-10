@@ -15,7 +15,7 @@ import { handleStoreToken } from "@/lib/utils/handleAuthSuccess";
 import { signupSchema, SignupFormData } from "@/lib/validations/auth.schema";
 import { mapErrors, ErrorResponse } from "@/lib/api/errorMapping";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { FormField } from "@/components/auth/FormField";
+import { FormField } from "@/components/FormField";
 
 export default function SignupPage() {
   const router = useRouter();
