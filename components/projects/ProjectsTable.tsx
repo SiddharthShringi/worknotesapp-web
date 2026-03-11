@@ -5,19 +5,23 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { EllipsisVertical } from "lucide-react";
 import { getProjects } from "@/lib/api/project.api";
 import { Project } from "@/types/project.types";
 import { ProjectRow } from "./ProjectRow";
 
-export function ProjectsTable() {
+type ProjectsTableProps = {
+  handleEditProject: (project: Project | null) => void;
+  setEditingProject: (project: Project | null) => void;
+};
+
+export function ProjectsTable({
+  handleEditProject,
+  setEditingProject,
+}: ProjectsTableProps) {
   const {
     data: projects = [],
     isLoading,
@@ -27,22 +31,8 @@ export function ProjectsTable() {
     queryFn: getProjects,
   });
 
-  const status = (project: Project) => {
-    if (project.archived) {
-      return (
-        <Badge className="bg-brand-graphite text-foreground">Archived</Badge>
-      );
-    }
-    return (
-      <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-        Active
-      </Badge>
-    );
-  };
-
   return (
     <Table className="my-20">
-      <TableCaption>A list of your Projects.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="px-2">Name</TableHead>
@@ -53,7 +43,12 @@ export function ProjectsTable() {
       </TableHeader>
       <TableBody>
         {projects.map((project) => (
-          <ProjectRow key={project.id} project={project} />
+          <ProjectRow
+            key={project.id}
+            project={project}
+            handleEditProject={handleEditProject}
+            setEditingProject={setEditingProject}
+          />
         ))}
       </TableBody>
     </Table>

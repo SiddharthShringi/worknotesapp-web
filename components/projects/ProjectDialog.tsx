@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Plus } from "lucide-react";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -17,7 +16,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Label } from "@/components/ui/label";
@@ -28,38 +26,91 @@ import {
   projectSchema,
 } from "@/lib/validations/project.schema";
 import { FormField } from "../FormField";
-import { createProject } from "@/lib/api/project.api";
+import { createProject, updateProject } from "@/lib/api/project.api";
 import { mapErrors, ErrorResponse } from "@/lib/api/errorMapping";
+import { Project } from "@/types/project.types";
 
-export function AddNewProjectDialog() {
-  const [open, setOpen] = useState(false);
+type ProjectDialogProps = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  project: Project | null;
+  setEditingProject: (project: Project | null) => void;
+};
 
+export function ProjectDialog({
+  open,
+  setOpen,
+  project,
+  setEditingProject,
+}: ProjectDialogProps) {
+  const isEditMode = !!project;
   const {
     register,
     handleSubmit,
     control,
     setError,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ProjectFormData>({
+    defaultValues: {
+      name: "",
+      description: "",
+      color: "blue",
+    },
     resolver: zodResolver(projectSchema),
   });
 
+  useEffect(() => {
+    if (project) {
+      reset({
+        name: project.name,
+        description: project.description ?? "",
+        color: project.color,
+      });
+    } else {
+      reset({
+        name: "",
+        description: "",
+        color: "blue",
+      });
+    }
+  }, [project, reset]);
+
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: createProject,
-    onError: (error: AxiosError<ErrorResponse>) => {
-      const message = mapErrors<ProjectFormData>(error, setError);
-      toast.error(message || "Failed to create project. Please try again.");
-    },
-    onSuccess: () => {
-      toast.success("Project created successfully");
-      reset();
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      setOpen(false);
-    },
-  });
+  const createProjectMutation = useMutation<
+    AxiosResponse,
+    AxiosError<ErrorResponse>,
+    ProjectParams
+  >({ mutationFn: createProject });
+
+  const updateProjectMutation = useMutation<
+    AxiosResponse,
+    AxiosError<ErrorResponse>,
+    { projectId: string; params: ProjectParams }
+  >({ mutationFn: updateProject });
+
+  const handleError = (
+    error: AxiosError<ErrorResponse>,
+    action: "create" | "update",
+  ) => {
+    const message = mapErrors<ProjectFormData>(error, setError);
+
+    toast.error(message || `Failed to ${action} project. Please try again.`);
+  };
+
+  const handleSuccess = (action: "create" | "update") => {
+    toast.success(
+      action === "create"
+        ? "Project created successfully"
+        : "Project updated successfully",
+    );
+
+    reset();
+    setEditingProject(null);
+    queryClient.invalidateQueries({ queryKey: ["projects"] });
+    setOpen(false);
+  };
 
   const onSubmit: SubmitHandler<ProjectFormData> = (data) => {
     const payload: ProjectParams = {
@@ -69,25 +120,33 @@ export function AddNewProjectDialog() {
         color: data.color,
       },
     };
-    console.log(payload);
-    mutation.mutate(payload);
+
+    if (isEditMode && project) {
+      updateProjectMutation.mutate(
+        { projectId: project.id, params: payload },
+        {
+          onError: (error) => handleError(error, "update"),
+          onSuccess: () => handleSuccess("update"),
+        },
+      );
+    } else {
+      createProjectMutation.mutate(payload, {
+        onError: (error) => handleError(error, "create"),
+        onSuccess: () => handleSuccess("create"),
+      });
+    }
   };
 
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) {
       reset();
+      setEditingProject(null);
     }
     setOpen(isOpen);
   };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button className="hover:bg-brand-yellow text-background bg-foreground">
-          <Plus className="h-4 w-4" />
-          <p>Add New Project</p>
-        </Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -95,7 +154,9 @@ export function AddNewProjectDialog() {
           noValidate
         >
           <DialogHeader>
-            <DialogTitle>Add New Project</DialogTitle>
+            <DialogTitle>
+              {isEditMode ? "Edit Project" : "Add New Project"}
+            </DialogTitle>
             <DialogDescription>
               Fill in the details for your new project.
             </DialogDescription>
@@ -130,7 +191,9 @@ export function AddNewProjectDialog() {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={isEditMode && !isDirty}>
+              {isEditMode ? "Save" : "Add"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

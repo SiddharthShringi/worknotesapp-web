@@ -9,12 +9,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
+import DeleteProjectAlert from "./DeleteProjectAlert";
 
 type Props = {
   archived: boolean;
-  onEdit?: () => void;
-  onToggleArchive?: () => void;
-  onDelete?: () => void;
+  onEdit: () => void;
+  onToggleArchive: () => void;
+  onDelete: () => void;
 };
 
 export const ActionMenu = ({
@@ -41,13 +42,7 @@ export const ActionMenu = ({
             <span>Archive</span>
           )}
         </DropdownMenuItem>
-
-        <DropdownMenuItem
-          onClick={onDelete}
-          className="text-destructive focus:text-destructive"
-        >
-          Delete
-        </DropdownMenuItem>
+        <DeleteProjectAlert onDelete={onDelete} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
