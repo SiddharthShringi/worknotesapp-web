@@ -2,7 +2,6 @@
 
 import {
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogDescription,
@@ -11,28 +10,30 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { DropdownMenuItem } from "../ui/dropdown-menu";
+
 import { Button } from "../ui/button";
 
 type DeleteProjectAlertProps = {
+  open: boolean;
+  name: string;
+  setOpen: (open: boolean) => void;
   onDelete: () => void;
 };
 
-function DeleteProjectAlert({ onDelete }: DeleteProjectAlertProps) {
+function DeleteProjectAlert({
+  open,
+  name,
+  setOpen,
+  onDelete,
+}: DeleteProjectAlertProps) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <DropdownMenuItem
-          className="text-destructive"
-          onSelect={(e) => e.preventDefault()}
-        >
-          Delete
-        </DropdownMenuItem>
-      </AlertDialogTrigger>
-
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete project?</AlertDialogTitle>
+          <AlertDialogTitle>
+            Delete project{" "}
+            <span className="font-medium text-primary">{`${name}?`}</span>
+          </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete the
             project.

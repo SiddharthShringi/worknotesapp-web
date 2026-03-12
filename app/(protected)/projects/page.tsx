@@ -10,6 +10,7 @@ import { Project } from "@/types/project.types";
 function ProjectPage() {
   const [open, setOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  debugger;
 
   const handleEditProject = (project: Project | null) => {
     setEditingProject(project);
@@ -30,10 +31,7 @@ function ProjectPage() {
           <p>Add New Project</p>
         </Button>
       </div>
-      <ProjectsTable
-        handleEditProject={handleEditProject}
-        setEditingProject={setEditingProject}
-      />
+      <ProjectsTable handleEditProject={handleEditProject} />
       <ProjectDialog
         open={open}
         setOpen={setOpen}

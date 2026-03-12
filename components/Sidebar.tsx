@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Clock8, NotebookPen, FileText } from "lucide-react";
+import { Clock, NotebookPen, FileText } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -32,18 +32,17 @@ export default function Sidebar() {
 
         {/* Navigation */}
         <nav className="flex flex-col gap-1">
+          <Link href="/tracker" className={linkClass("/tracker")}>
+            <span>
+              <Clock className="h-5 w-5" />
+            </span>
+            <span className="text-base font-medium">Time Tracker</span>
+          </Link>
           <Link href="/projects" className={linkClass("/projects")}>
             <span>
-              <FileText className="h-4 w-4" />
+              <FileText className="h-5 w-5" />
             </span>
-            <span className="text-base">Projects</span>
-          </Link>
-
-          <Link href="/time-tracker" className={linkClass("/time-tracker")}>
-            <span>
-              <Clock8 className="h-4 w-4" />
-            </span>
-            <span className="text-base">Time Tracker</span>
+            <span className="text-base font-medium">Projects</span>
           </Link>
         </nav>
       </div>

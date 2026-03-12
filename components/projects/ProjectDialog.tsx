@@ -158,7 +158,9 @@ export function ProjectDialog({
               {isEditMode ? "Edit Project" : "Add New Project"}
             </DialogTitle>
             <DialogDescription>
-              Fill in the details for your new project.
+              {isEditMode
+                ? "Edit the details for your project."
+                : "Fill in the details for your new project."}
             </DialogDescription>
           </DialogHeader>
           <FieldGroup>

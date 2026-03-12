@@ -10,14 +10,9 @@ import { toast } from "sonner";
 type ProjectRowProps = {
   project: Project;
   handleEditProject: (project: Project | null) => void;
-  setEditingProject: (project: Project | null) => void;
 };
 
-export const ProjectRow = ({
-  project,
-  handleEditProject,
-  setEditingProject,
-}: ProjectRowProps) => {
+export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
   const { id, name, description } = project;
 
   const status = project.archived ? (
@@ -38,7 +33,6 @@ export const ProjectRow = ({
   });
 
   const handleToggleArchive = () => {
-    setEditingProject(project);
     const payload = {
       projectId: project.id,
       params: { project: { archived: !project.archived } },
@@ -48,17 +42,14 @@ export const ProjectRow = ({
         toast.success(
           `Project ${project.archived ? "activated" : "archived"} successfully`,
         );
-        setEditingProject(null);
         queryClient.invalidateQueries({ queryKey: ["projects"] });
       },
     });
   };
   const handleDelete = () => {
-    setEditingProject(project);
     deleteMutation.mutate(id, {
       onSuccess: () => {
         toast.success("Project deleted successfully");
-        setEditingProject(null);
         queryClient.invalidateQueries({ queryKey: ["projects"] });
       },
     });
@@ -66,10 +57,10 @@ export const ProjectRow = ({
 
   return (
     <TableRow key={id}>
-      <TableCell className="font-semibold py-4 px-2">
+      <TableCell className="font-semibold text-base py-4 px-2">
         <div className="flex items-center gap-2">
           <div
-            className={`h-4 w-4 rounded-full border border-border ${
+            className={`h-5 w-5 rounded-lg border border-border ${
               PROJECT_COLOR_MAP[project.color]
             }`}
           />
@@ -85,6 +76,7 @@ export const ProjectRow = ({
       <TableCell className="flex justify-end py-4 px-2">
         <ActionMenu
           archived={project.archived}
+          name={project.name}
           onEdit={() => handleEditProject(project)}
           onDelete={handleDelete}
           onToggleArchive={handleToggleArchive}
