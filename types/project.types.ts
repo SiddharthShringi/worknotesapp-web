@@ -1,3 +1,5 @@
+import { PROJECT_COLORS } from "@/lib/constants/project-colors";
+
 export interface ProjectParams {
   project: {
     name: string;
@@ -6,10 +8,18 @@ export interface ProjectParams {
   };
 }
 
+export interface ProjectArchieveParams {
+  project: {
+    archived: boolean;
+  };
+}
+
+export type ProjectColor = (typeof PROJECT_COLORS)[number]["value"];
+
 export interface Project {
   id: string;
   name: string;
   description?: string;
-  color: string;
+  color: ProjectColor;
   archived: boolean;
 }

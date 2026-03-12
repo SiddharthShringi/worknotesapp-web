@@ -5,44 +5,32 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { EllipsisVertical } from "lucide-react";
 import { getProjects } from "@/lib/api/project.api";
 import { Project } from "@/types/project.types";
 import { ProjectRow } from "./ProjectRow";
+import { TableSkeletonRow } from "./TableSkeletonRow";
+import { EmptyProjects } from "./EmptyProjects";
 
-export function ProjectsTable() {
-  const {
-    data: projects = [],
-    isLoading,
-    error,
-  } = useQuery<Project[]>({
+type ProjectsTableProps = {
+  handleEditProject: (project: Project | null) => void;
+};
+
+export function ProjectsTable({ handleEditProject }: ProjectsTableProps) {
+  const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: ["projects"],
     queryFn: getProjects,
   });
 
-  const status = (project: Project) => {
-    if (project.archived) {
-      return (
-        <Badge className="bg-brand-graphite text-foreground">Archived</Badge>
-      );
-    }
-    return (
-      <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
-        Active
-      </Badge>
-    );
-  };
+  if (!isLoading && projects.length === 0) {
+    return <EmptyProjects />;
+  }
 
   return (
-    <Table className="my-20">
-      <TableCaption>A list of your Projects.</TableCaption>
+    <Table className="my-12">
       <TableHeader>
         <TableRow>
           <TableHead className="px-2">Name</TableHead>
@@ -52,9 +40,17 @@ export function ProjectsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {projects.map((project) => (
-          <ProjectRow key={project.id} project={project} />
-        ))}
+        {isLoading &&
+          Array.from({ length: 5 }).map((_, i) => <TableSkeletonRow key={i} />)}
+        {!isLoading &&
+          projects.length > 0 &&
+          projects.map((project) => (
+            <ProjectRow
+              key={project.id}
+              project={project}
+              handleEditProject={handleEditProject}
+            />
+          ))}
       </TableBody>
     </Table>
   );
