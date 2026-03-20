@@ -10,7 +10,6 @@ import { Project } from "@/types/project.types";
 function ProjectPage() {
   const [open, setOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  debugger;
 
   const handleEditProject = (project: Project | null) => {
     setEditingProject(project);
