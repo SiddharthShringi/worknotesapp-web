@@ -2,6 +2,7 @@ import axiosInstance from "./axios";
 import { WorkSessionParams } from "@/types/workSession.types";
 
 export const createWorkSession = async (params: WorkSessionParams) => {
+  // console.log(params);
   const response = await axiosInstance.post("api/v1/work_sessions", params);
   return response;
 };

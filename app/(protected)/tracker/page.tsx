@@ -1,9 +1,9 @@
-import { WorkSession } from "@/components/time-tracker/WorkSession";
+import { WorkSessionContainer } from "@/components/time-tracker/WorkSessionContainer";
 
 function TimeTrackerPage() {
   return (
     <div className="max-w-7xl">
-      <WorkSession />
+      <WorkSessionContainer />
     </div>
   );
 }
