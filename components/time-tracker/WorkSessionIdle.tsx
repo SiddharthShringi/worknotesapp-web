@@ -62,15 +62,28 @@ export function WorkSessionIdle({ form, projects }: WorkSessionIdleProps) {
                 const selectedProject = projects.find(
                   (p) => p.id === field.value,
                 );
+                console.log({ value: field });
                 return (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" className="h-11 shrink-0">
-                        <FilePlusCorner className="h-6 w-6" />
-                        Project
+                        {selectedProject ? (
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`h-2 w-2 rounded-full border border-border ${
+                                PROJECT_COLOR_MAP[selectedProject.color]
+                              }`}
+                            />
+                            {selectedProject.name}
+                          </div>
+                        ) : (
+                          <>
+                            <FilePlusCorner className="h-6 w-6" />
+                            Project
+                          </>
+                        )}
                       </Button>
                     </DropdownMenuTrigger>
-
                     <DropdownMenuContent>
                       {projects.map((project) => (
                         <DropdownMenuItem
@@ -98,8 +111,8 @@ export function WorkSessionIdle({ form, projects }: WorkSessionIdleProps) {
               size="xl"
               variant="brand"
             >
-              <Play className="h-5 w-5" />
               Start Session
+              <Play className="h-5 w-5" />
             </Button>
           </form>
         </CardContent>

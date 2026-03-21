@@ -21,7 +21,7 @@ function ProjectPage() {
       <div className="flex items-center justify-between hover:pointer">
         <h1 className="text-3xl font-bold">Projects</h1>
         <Button
-          className="hover:bg-brand-yellow text-background bg-foreground"
+          variant="brand"
           onClick={() => {
             handleEditProject(editingProject);
           }}
