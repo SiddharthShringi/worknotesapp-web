@@ -67,12 +67,12 @@ export function WorkSessionIdle({
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center text-center mb-8">
+      <div className="flex flex-col items-center justify-center text-center mb-3">
         <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
           What&apos;s your next task?
         </h1>
 
-        <p className="text-sm text-muted-foreground mt-2 max-w-md">
+        <p className="text-sm text-muted-foreground mt-1 max-w-md">
           Start a session by setting a clear intention
         </p>
       </div>
@@ -91,9 +91,11 @@ export function WorkSessionIdle({
                 aria-invalid={!!errors.intent}
                 {...register("intent")}
               />
-              <p className="text-destructive text-sm min-h-[20px] mt-1">
-                {errors.intent?.message || ""}
-              </p>
+              {errors.intent && (
+                <p className="text-destructive text-sm min-h-[20px] mt-1">
+                  {errors.intent?.message || ""}
+                </p>
+              )}
             </div>
             {/* Project icon button */}
             <Controller
@@ -111,7 +113,7 @@ export function WorkSessionIdle({
                         className={cn(
                           "h-11 shrink-0",
                           errors.projectId &&
-                            field.value === undefined &&
+                            !field.value &&
                             "border-destructive!",
                         )}
                       >
