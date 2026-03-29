@@ -48,7 +48,6 @@ export function WorkSessionIdle({
       toast.error(message || "Create Work Session Failed. Please try again.");
     },
     onSuccess: (response) => {
-      console.log({ response });
       reset();
       onWorkSessionStart(response.data);
       toast.success("Created Work Session successfully");
