@@ -75,7 +75,9 @@ export function WorkSessionContainer() {
           setLocalWorkSession={setLocalWorkSession}
         />
       )}
-      {workStage === "completed" && <WorkSessionCompleted />}
+      {workStage === "completed" && (
+        <WorkSessionCompleted workSession={workSession} projects={projects} />
+      )}
     </>
   );
 }
