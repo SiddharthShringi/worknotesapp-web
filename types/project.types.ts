@@ -17,7 +17,7 @@ export interface ProjectArchieveParams {
 export type ProjectColor = (typeof PROJECT_COLORS)[number]["value"];
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
   description?: string;
   color: ProjectColor;

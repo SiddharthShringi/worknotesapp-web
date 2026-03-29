@@ -10,7 +10,6 @@ import { Project } from "@/types/project.types";
 function ProjectPage() {
   const [open, setOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  debugger;
 
   const handleEditProject = (project: Project | null) => {
     setEditingProject(project);
@@ -22,7 +21,7 @@ function ProjectPage() {
       <div className="flex items-center justify-between hover:pointer">
         <h1 className="text-3xl font-bold">Projects</h1>
         <Button
-          className="hover:bg-brand-yellow text-background bg-foreground"
+          variant="brand"
           onClick={() => {
             handleEditProject(editingProject);
           }}
