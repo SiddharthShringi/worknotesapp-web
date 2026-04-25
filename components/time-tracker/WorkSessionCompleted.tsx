@@ -19,15 +19,20 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
+import { useMutation } from "@tanstack/react-query";
+import { updateWorkSession } from "@/lib/api/workSession.api";
+import { toast } from "sonner";
 
 type WorkSessionCompletedProps = {
   workSession: WorkSession;
   projects: Project[];
+  setLocalWorkSession: React.Dispatch<React.SetStateAction<WorkSession | null>>;
 };
 
 export function WorkSessionCompleted({
   workSession,
   projects,
+  setLocalWorkSession,
 }: WorkSessionCompletedProps) {
   const { intent, project_id, notes } = workSession;
 
@@ -46,8 +51,28 @@ export function WorkSessionCompleted({
     resolver: zodResolver(workSessionSchema),
   });
 
+  const mutation = useMutation({
+    mutationFn: updateWorkSession,
+    onSuccess: () => {
+      toast.success("Added Notes successfully");
+      setLocalWorkSession(null);
+    },
+    onError: () => {
+      toast.error("Failed to Add Notes. Please try again.");
+    },
+  });
+
   const onSubmit = (data: WorkSessionFormData) => {
-    console.log("SUBMIT", data);
+    mutation.mutate({
+      workSessionId: workSession.id,
+      params: {
+        work_session: {
+          intent: data.intent,
+          project_id: data.projectId ?? undefined,
+          notes: data.notes as string | undefined,
+        },
+      },
+    });
   };
 
   return (

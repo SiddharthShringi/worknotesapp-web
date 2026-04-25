@@ -8,7 +8,7 @@ export const workSessionSchema = z.object({
     .refine((val) => val !== undefined, {
       message: "Project is required",
     }),
-  notes: z.string().optional,
+  notes: z.string().optional(),
 });
 
 export type WorkSessionFormData = z.infer<typeof workSessionSchema>;

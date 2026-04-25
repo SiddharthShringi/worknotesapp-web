@@ -17,7 +17,6 @@ export function WorkSessionRunning({
   setLocalWorkSession,
 }: WorkSessionRunningProps) {
   const { intent, started_at } = workSession;
-  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: stopWorkSession,
