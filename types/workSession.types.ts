@@ -9,8 +9,9 @@ export interface WorkSession {
 
 export interface WorkSessionParams {
   work_session: {
-    intent: string;
-    project_id: number;
+    intent?: string;
+    project_id?: number;
+    notes?: string;
   };
 }
 

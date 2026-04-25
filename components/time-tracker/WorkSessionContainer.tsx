@@ -18,7 +18,6 @@ import { WorkSessionCompleted } from "./WorkSessionCompleted";
 import { getActiveWorkSession } from "@/lib/api/workSession.api";
 
 export function WorkSessionContainer() {
-  // const [workStage, setWorkStage] = useState<WorkSessionStage>("running");
   const [localWorkSession, setLocalWorkSession] = useState<WorkSession | null>(
     null,
   );
@@ -76,7 +75,11 @@ export function WorkSessionContainer() {
         />
       )}
       {workStage === "completed" && (
-        <WorkSessionCompleted workSession={workSession} projects={projects} />
+        <WorkSessionCompleted
+          workSession={workSession}
+          projects={projects}
+          setLocalWorkSession={setLocalWorkSession}
+        />
       )}
     </>
   );
