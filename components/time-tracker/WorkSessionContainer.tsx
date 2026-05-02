@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ import {
   IdleWorkSessionFormData,
   idleWorkSessionSchema,
 } from "@/lib/validations/workSession.schema";
-import { WorkSession, WorkSessionStage } from "@/types/workSession.types";
+import { WorkSession } from "@/types/workSession.types";
 import { getProjects } from "@/lib/api/project.api";
 import { Project } from "@/types/project.types";
 import { WorkSessionIdle } from "./WorkSessionIdle";

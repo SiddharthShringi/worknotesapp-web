@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 import { cn } from "@/lib/utils";
 import { IdleWorkSessionFormData } from "@/lib/validations/workSession.schema";
 import { Input } from "@/components/ui/input";
-import { FilePlusCorner, Play } from "lucide-react";
+import { FilePlusCorner, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -159,12 +159,12 @@ export function WorkSessionIdle({
             />
             <Button
               type="submit"
-              className="px-4 sm:px-6 md:px-8  flex items-center gap-2 shrink-0"
+              className="px-4 sm:px-6 md:px-8 flex items-center shrink-0"
               size="xl"
               variant="brand"
             >
-              Start Session
-              <Play className="h-5 w-5" />
+              <Zap className="h-2 w-2" />
+              Start
             </Button>
           </form>
         </CardContent>

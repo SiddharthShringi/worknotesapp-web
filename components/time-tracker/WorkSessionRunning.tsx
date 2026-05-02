@@ -61,7 +61,7 @@ export function WorkSessionRunning({
           className="mt-2 flex items-center gap-2 px-8 py-6 text-base"
         >
           <StopCircleIcon className="size-5" />
-          Stop Session
+          Stop
         </Button>
       </CardContent>
     </Card>

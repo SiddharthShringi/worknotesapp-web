@@ -15,4 +15,17 @@ export interface WorkSessionParams {
   };
 }
 
+export interface WorkSessionData {
+  id: number;
+  intent: string;
+  notes: string | null;
+  project: {
+    name: string;
+    color: string;
+  };
+  started_at: string;
+  ended_at: string | null;
+  duration: string | null;
+}
+
 export type WorkSessionStage = "idle" | "running" | "completed";

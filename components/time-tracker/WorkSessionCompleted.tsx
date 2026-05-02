@@ -186,7 +186,7 @@ export function WorkSessionCompleted({
             {/* Notes */}
             <div className="flex flex-col gap-1">
               <Textarea
-                placeholder="Add notes about this session..."
+                placeholder="Write notes... (use - for bullets, ** for bold)"
                 rows={5}
                 {...register("notes")}
               />
@@ -200,8 +200,8 @@ export function WorkSessionCompleted({
             {/* Submit */}
             <div className="flex justify-end">
               <Button type="submit" size="lg" className="px-6 flex gap-2">
-                Save Session
                 <Save className="size-4" />
+                Save
               </Button>
             </div>
           </form>
