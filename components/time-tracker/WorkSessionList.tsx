@@ -38,7 +38,7 @@ export function WorkSessionList() {
         groupedSessions.map((group) => (
           <div key={group.date} className="mt-6">
             <DateLabel label={group.label} />
-            <ul className="space-y-3">
+            <ul className="space-y-5">
               {group.sessions.map((session) => (
                 <WorkSession key={session.id} session={session} />
               ))}

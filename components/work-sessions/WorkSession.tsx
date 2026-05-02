@@ -14,29 +14,44 @@ type WorkSessionProps = {
 export default function WorkSession({ session }: WorkSessionProps) {
   const { intent, duration, project, started_at, notes } = session;
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-2xl bg-muted-foreground"></div>
-          <p className="text-xl font-medium text-foreground">{intent}</p>
-          <Badge className={`${PROJECT_COLOR_MAP[project.color]}`}>
-            <Folder />
-            {project.name}
-          </Badge>
-          <div className="flex items-center gap-1 font-semibold">
-            <Clock className="text-muted-foreground" size={14} />
-            <span className="text-sm text-muted-foreground">
-              {format(new Date(started_at), "h:mm a")}
-            </span>
-          </div>
-        </div>
-        <p className="text-lg font-bold text-foreground">
-          {formatDuration(Number(duration) || 0)}
-        </p>
+    <div className="flex gap-4">
+      {/* Timeline */}
+      <div className="flex flex-col items-center w-4">
+        <div className="h-3 w-3 rounded-full bg-brand-yellow mt-1"></div>
+        <div className="w-px flex-1 bg-border mt-1"></div>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="text-sm text-muted-foreground mt-1">
-          <div className="prose prose-sm">
+
+      {/* Content */}
+      <div className="flex-1 space-y-1">
+        {/* Header */}
+        <div className="flex items-start justify-between">
+          <div>
+            {/* Intent */}
+            <p className="text-base font-semibold text-foreground">{intent}</p>
+
+            {/* Metadata */}
+            <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <Folder size={14} />
+                <span>{project.name}</span>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <Clock size={14} />
+                <span>{format(new Date(started_at), "h:mm a")}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Duration */}
+          <p className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+            {formatDuration(Number(duration) || 0)}
+          </p>
+        </div>
+
+        {/* Notes */}
+        {notes && (
+          <div className="prose prose-sm mt-2 text-muted-foreground">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -48,7 +63,7 @@ export default function WorkSession({ session }: WorkSessionProps) {
               {notes}
             </ReactMarkdown>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
