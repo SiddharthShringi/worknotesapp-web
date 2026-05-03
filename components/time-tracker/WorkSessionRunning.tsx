@@ -1,6 +1,6 @@
 import { Timer } from "./Timer";
 import { WorkSession } from "@/types/workSession.types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { stopWorkSession } from "@/lib/api/workSession.api";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";

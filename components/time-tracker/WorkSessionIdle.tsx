@@ -86,7 +86,7 @@ export function WorkSessionIdle({
               <Input
                 className="h-11 shrink-0"
                 id="intent"
-                placeholder="What are your intent for this session?"
+                placeholder="What is your intent for this session?"
                 aria-invalid={!!errors.intent}
                 {...register("intent")}
               />
@@ -120,7 +120,7 @@ export function WorkSessionIdle({
                           <div className="flex items-center gap-2">
                             <div
                               className={`h-2 w-2 rounded-full border border-border ${
-                                PROJECT_COLOR_MAP[selectedProject.color]
+                                PROJECT_COLOR_MAP[selectedProject.color].bg
                               }`}
                             />
                             {selectedProject.name}
@@ -145,7 +145,7 @@ export function WorkSessionIdle({
                           <div className="flex items-center gap-2">
                             <div
                               className={`h-3 w-3 rounded-full border border-border ${
-                                PROJECT_COLOR_MAP[project.color]
+                                PROJECT_COLOR_MAP[project.color].bg
                               }`}
                             />
                             {project.name}
