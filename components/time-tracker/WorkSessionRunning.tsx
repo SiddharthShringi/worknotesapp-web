@@ -1,6 +1,6 @@
 import { Timer } from "./Timer";
 import { WorkSession } from "@/types/workSession.types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { stopWorkSession } from "@/lib/api/workSession.api";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
@@ -61,7 +61,7 @@ export function WorkSessionRunning({
           className="mt-2 flex items-center gap-2 px-8 py-6 text-base"
         >
           <StopCircleIcon className="size-5" />
-          Stop Session
+          Stop
         </Button>
       </CardContent>
     </Card>

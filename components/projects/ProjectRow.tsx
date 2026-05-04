@@ -61,7 +61,7 @@ export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
         <div className="flex items-center gap-2">
           <div
             className={`h-5 w-5 rounded-lg border border-border ${
-              PROJECT_COLOR_MAP[project.color]
+              PROJECT_COLOR_MAP[project.color].bg
             }`}
           />
           {name}

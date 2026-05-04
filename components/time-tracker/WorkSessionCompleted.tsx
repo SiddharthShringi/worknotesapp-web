@@ -1,3 +1,4 @@
+"use client";
 import { useForm, Controller } from "react-hook-form";
 import {
   workSessionSchema,
@@ -19,7 +20,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateWorkSession } from "@/lib/api/workSession.api";
 import { toast } from "sonner";
 
@@ -35,6 +36,7 @@ export function WorkSessionCompleted({
   setLocalWorkSession,
 }: WorkSessionCompletedProps) {
   const { intent, project_id, notes } = workSession;
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -51,11 +53,18 @@ export function WorkSessionCompleted({
     resolver: zodResolver(workSessionSchema),
   });
 
+  const handleComplete = () => {
+    setLocalWorkSession(null);
+
+    queryClient.invalidateQueries({ queryKey: ["activeWorkSession"] });
+    queryClient.invalidateQueries({ queryKey: ["workSessions"] });
+  };
+
   const mutation = useMutation({
     mutationFn: updateWorkSession,
     onSuccess: () => {
       toast.success("Added Notes successfully");
-      setLocalWorkSession(null);
+      handleComplete();
     },
     onError: () => {
       toast.error("Failed to Add Notes. Please try again.");
@@ -186,7 +195,7 @@ export function WorkSessionCompleted({
             {/* Notes */}
             <div className="flex flex-col gap-1">
               <Textarea
-                placeholder="Add notes about this session..."
+                placeholder="Use bullet points or numbered lists. Add links if needed."
                 rows={5}
                 {...register("notes")}
               />
@@ -200,8 +209,8 @@ export function WorkSessionCompleted({
             {/* Submit */}
             <div className="flex justify-end">
               <Button type="submit" size="lg" className="px-6 flex gap-2">
-                Save Session
                 <Save className="size-4" />
+                Save
               </Button>
             </div>
           </form>
