@@ -32,14 +32,23 @@ export default function Markdown({ children }: MarkdownProps) {
             </a>
           ),
 
+          strong: ({ children }) => (
+            <strong className="font-semibold text-foreground/70">
+              {children}
+            </strong>
+          ),
+          em: ({ children }) => (
+            <em className="italic text-foreground">{children}</em>
+          ),
+
           // Everything else → plain text (flattened)
 
           p: ({ children }) => <>{children}</>, // no extra spacing
           h1: ({ children }) => <>{children}</>,
           h2: ({ children }) => <>{children}</>,
           h3: ({ children }) => <>{children}</>,
-          strong: ({ children }) => <>{children}</>,
-          em: ({ children }) => <>{children}</>,
+          // strong: ({ children }) => <>{children}</>,
+          // em: ({ children }) => <>{children}</>,
           blockquote: ({ children }) => <>{children}</>,
           code: ({ children }) => <>{children}</>,
           pre: ({ children }) => <>{children}</>,

@@ -25,7 +25,7 @@ export default function AuthLayout({
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* Left Side */}
-      <div className="hidden md:flex bg-brand-yellow items-center justify-center p-12">
+      <div className="hidden md:flex bg-brand-lime-green items-center justify-center p-12">
         <div className="max-w-md space-y-12">
           {/* Brand */}
           <div className="space-y-4">

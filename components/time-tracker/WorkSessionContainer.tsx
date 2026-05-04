@@ -25,8 +25,8 @@ export function WorkSessionContainer() {
   const { data: projects = [], isLoading: loadingProjects } = useQuery<
     Project[]
   >({
-    queryKey: ["projects"],
-    queryFn: getProjects,
+    queryKey: ["projects", { status: "active" }],
+    queryFn: () => getProjects({ status: "active" }),
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

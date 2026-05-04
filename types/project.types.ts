@@ -14,6 +14,10 @@ export interface ProjectArchieveParams {
   };
 }
 
+export type GetProjectsParams = {
+  status?: "active" | "archived";
+};
+
 export type ProjectColor = (typeof PROJECT_COLORS)[number]["value"];
 
 export interface Project {
