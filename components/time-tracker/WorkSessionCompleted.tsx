@@ -145,7 +145,7 @@ export function WorkSessionCompleted({
                               <div className="flex items-center gap-2">
                                 <div
                                   className={`h-2 w-2 rounded-full border ${
-                                    PROJECT_COLOR_MAP[selectedProject.color]
+                                    PROJECT_COLOR_MAP[selectedProject.color].bg
                                   }`}
                                 />
                                 {selectedProject.name}
@@ -171,7 +171,7 @@ export function WorkSessionCompleted({
                               <div className="flex items-center gap-2">
                                 <div
                                   className={`h-3 w-3 rounded-full border ${
-                                    PROJECT_COLOR_MAP[project.color]
+                                    PROJECT_COLOR_MAP[project.color].bg
                                   }`}
                                 />
                                 {project.name}
