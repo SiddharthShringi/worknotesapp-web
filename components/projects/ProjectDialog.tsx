@@ -34,7 +34,8 @@ type ProjectDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   project: Project | null;
-  setEditingProject: (project: Project | null) => void;
+  setEditingProject?: (project: Project | null) => void;
+  setNewProjectId?: (projectId: number) => void;
 };
 
 export function ProjectDialog({
@@ -42,6 +43,7 @@ export function ProjectDialog({
   setOpen,
   project,
   setEditingProject,
+  setNewProjectId,
 }: ProjectDialogProps) {
   const isEditMode = !!project;
   const {
@@ -107,7 +109,9 @@ export function ProjectDialog({
     );
 
     reset();
-    setEditingProject(null);
+    if (setEditingProject) {
+      setEditingProject(null);
+    }
     queryClient.invalidateQueries({ queryKey: ["projects"] });
     setOpen(false);
   };
@@ -132,7 +136,12 @@ export function ProjectDialog({
     } else {
       createProjectMutation.mutate(payload, {
         onError: (error) => handleError(error, "create"),
-        onSuccess: () => handleSuccess("create"),
+        onSuccess: (data) => {
+          if (setNewProjectId) {
+            setNewProjectId(data.data.id);
+          }
+          handleSuccess("create");
+        },
       });
     }
   };
@@ -140,7 +149,9 @@ export function ProjectDialog({
   const handleOpenChange = (isOpen: boolean) => {
     if (!isOpen) {
       reset();
-      setEditingProject(null);
+      if (setEditingProject) {
+        setEditingProject(null);
+      }
     }
     setOpen(isOpen);
   };

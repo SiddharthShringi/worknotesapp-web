@@ -1,10 +1,12 @@
+"use client";
+import { useState, useEffect } from "react";
 import { Controller, UseFormReturn, SubmitHandler } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { cn } from "@/lib/utils";
 import { IdleWorkSessionFormData } from "@/lib/validations/workSession.schema";
 import { Input } from "@/components/ui/input";
-import { FilePlusCorner, Zap } from "lucide-react";
+import { FilePlusCorner, Plus, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -19,6 +21,7 @@ import { WorkSession, WorkSessionParams } from "@/types/workSession.types";
 import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
 import { createWorkSession } from "@/lib/api/workSession.api";
 import { mapErrors, ErrorResponse } from "@/lib/api/errorMapping";
+import { ProjectDialog } from "@/components/projects/ProjectDialog";
 
 type WorkSessionIdleProps = {
   form: UseFormReturn<IdleWorkSessionFormData>;
@@ -31,11 +34,16 @@ export function WorkSessionIdle({
   projects,
   onWorkSessionStart,
 }: WorkSessionIdleProps) {
+  const [projectDialogOpen, setProjectDialogOpen] = useState(false);
+  const [newProjectId, setNewProjectId] = useState<number | undefined>(
+    undefined,
+  );
   const {
     register,
     control,
     handleSubmit,
     setError,
+    setValue,
     formState: { errors },
     clearErrors,
     reset,
@@ -53,6 +61,13 @@ export function WorkSessionIdle({
       toast.success("Created Work Session successfully");
     },
   });
+
+  useEffect(() => {
+    if (newProjectId) {
+      setValue("projectId", newProjectId);
+      clearErrors("projectId");
+    }
+  }, [newProjectId, setValue, clearErrors]);
 
   const onSubmit: SubmitHandler<IdleWorkSessionFormData> = (data) => {
     const payload: WorkSessionParams = {
@@ -152,6 +167,16 @@ export function WorkSessionIdle({
                           </div>
                         </DropdownMenuItem>
                       ))}
+                      <DropdownMenuItem
+                        className="group border-t data-highlighted:bg-transparent"
+                        key="Add New Project"
+                        onClick={() => setProjectDialogOpen(true)}
+                      >
+                        <div className="flex items-center gap-2 font-semibold text-foreground cursor-pointer group-data-highlighted:text-brand-lime-green">
+                          <Plus className="h-3 w-3 text-foreground group-data-highlighted:text-brand-lime-green" />
+                          Add New Project
+                        </div>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 );
@@ -169,6 +194,12 @@ export function WorkSessionIdle({
           </form>
         </CardContent>
       </Card>
+      <ProjectDialog
+        open={projectDialogOpen}
+        setOpen={setProjectDialogOpen}
+        project={null}
+        setNewProjectId={setNewProjectId}
+      />
     </div>
   );
 }
