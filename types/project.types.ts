@@ -8,6 +8,8 @@ export interface ProjectParams {
   };
 }
 
+export type ProjectStatus = "active" | "archived" | "all";
+
 export interface ProjectArchieveParams {
   project: {
     archived: boolean;
@@ -15,7 +17,7 @@ export interface ProjectArchieveParams {
 }
 
 export type GetProjectsParams = {
-  status?: "active" | "archived";
+  status?: ProjectStatus;
 };
 
 export type ProjectColor = (typeof PROJECT_COLORS)[number]["value"];

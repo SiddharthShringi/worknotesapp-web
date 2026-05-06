@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -10,27 +11,37 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getProjects } from "@/lib/api/project.api";
-import { Project } from "@/types/project.types";
+import { Project, ProjectStatus } from "@/types/project.types";
 import { ProjectRow } from "./ProjectRow";
 import { TableSkeletonRow } from "./TableSkeletonRow";
 import { EmptyProjects } from "./EmptyProjects";
 
 type ProjectsTableProps = {
   handleEditProject: (project: Project | null) => void;
+  status: ProjectStatus;
 };
 
-export function ProjectsTable({ handleEditProject }: ProjectsTableProps) {
-  const { data: projects = [], isLoading } = useQuery<Project[]>({
-    queryKey: ["projects"],
-    queryFn: getProjects,
+export function ProjectsTable({
+  handleEditProject,
+  status,
+}: ProjectsTableProps) {
+  const querKey = status === "all" ? ["projects"] : ["projects", { status }];
+  const queryFn =
+    status === "all" ? () => getProjects() : () => getProjects({ status });
+
+  const { data, isLoading } = useQuery({
+    queryKey: querKey,
+    queryFn: queryFn,
   });
+
+  const projects = (data as Project[]) || [];
 
   if (!isLoading && projects.length === 0) {
     return <EmptyProjects />;
   }
 
   return (
-    <Table className="my-12">
+    <Table className="my-5">
       <TableHeader>
         <TableRow>
           <TableHead className="px-2">Name</TableHead>
