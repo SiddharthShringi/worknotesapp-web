@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Project } from "@/types/project.types";
 import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
 import { ActionMenu } from "./ActionMenu";
-import { deleteProject, toggleArchiveProject } from "@/lib/api/project.api";
+import { toggleArchiveProject } from "@/lib/api/project.api";
 import { toast } from "sonner";
 
 type ProjectRowProps = {
@@ -27,7 +27,6 @@ export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
 
   const queryClient = useQueryClient();
 
-  const deleteMutation = useMutation({ mutationFn: deleteProject });
   const toggleArchiveMutation = useMutation({
     mutationFn: toggleArchiveProject,
   });
@@ -42,14 +41,6 @@ export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
         toast.success(
           `Project ${project.archived ? "activated" : "archived"} successfully`,
         );
-        queryClient.invalidateQueries({ queryKey: ["projects"] });
-      },
-    });
-  };
-  const handleDelete = () => {
-    deleteMutation.mutate(id, {
-      onSuccess: () => {
-        toast.success("Project deleted successfully");
         queryClient.invalidateQueries({ queryKey: ["projects"] });
       },
     });
@@ -76,9 +67,7 @@ export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
       <TableCell className="flex justify-end py-4 px-2">
         <ActionMenu
           archived={project.archived}
-          name={project.name}
           onEdit={() => handleEditProject(project)}
-          onDelete={handleDelete}
           onToggleArchive={handleToggleArchive}
         />
       </TableCell>

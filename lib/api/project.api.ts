@@ -11,7 +11,6 @@ export const createProject = async (params: ProjectParams) => {
 };
 
 export const getProjects = async (params?: GetProjectsParams) => {
-  console.log("Fetching projects with params:", params);
   const response = await axiosInstance.get("api/v1/projects", { params });
   return response.data;
 };
@@ -27,11 +26,6 @@ export const updateProject = async ({
     `api/v1/projects/${projectId}`,
     params,
   );
-  return response;
-};
-
-export const deleteProject = async (projectId: string) => {
-  const response = await axiosInstance.delete(`api/v1/projects/${projectId}`);
   return response;
 };
 

@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,25 +7,14 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { EllipsisVertical } from "lucide-react";
-import DeleteProjectAlert from "./DeleteProjectAlert";
 
 type Props = {
   archived: boolean;
-  name: string;
   onEdit: () => void;
   onToggleArchive: () => void;
-  onDelete: () => void;
 };
 
-export const ActionMenu = ({
-  archived,
-  name,
-  onEdit,
-  onToggleArchive,
-  onDelete,
-}: Props) => {
-  const [deleteOpen, setDeleteOpen] = useState(false);
-
+export const ActionMenu = ({ archived, onEdit, onToggleArchive }: Props) => {
   return (
     <>
       <DropdownMenu>
@@ -47,25 +33,11 @@ export const ActionMenu = ({
                 Activate
               </span>
             ) : (
-              <span>Archive</span>
+              <span className="text-destructive">Archive</span>
             )}
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            className="text-destructive"
-            onClick={() => setDeleteOpen(true)}
-          >
-            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <DeleteProjectAlert
-        name={name}
-        open={deleteOpen}
-        setOpen={setDeleteOpen}
-        onDelete={onDelete}
-      />
     </>
   );
 };
