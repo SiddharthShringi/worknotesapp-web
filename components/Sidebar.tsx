@@ -22,10 +22,10 @@ export default function Sidebar() {
           href="/"
           className="flex items-center font-semibold tracking-tight"
         >
-          <span className="text-brand-lime-green dark:text-brand-lime-green p-2">
+          <span className="text-brand-yellow dark:text-brand-yellow p-2">
             <NotebookPen className="h-5 w-5" />
           </span>
-          <p className="text-2xl font-geist font-bold text-brand-lime-green dark:text-brand-lime-green">
+          <p className="text-2xl font-geist font-bold text-brand-yellow dark:text-brand-yellow">
             WorkNotes
           </p>
         </Link>

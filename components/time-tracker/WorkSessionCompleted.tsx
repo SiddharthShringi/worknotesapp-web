@@ -195,7 +195,7 @@ export function WorkSessionCompleted({
             {/* Notes */}
             <div className="flex flex-col gap-1">
               <Textarea
-                placeholder="Use bullet points or numbered lists. Add links if needed."
+                placeholder="Write notes using Markdown… (- item, 1. step) Add links([text](url)) if needed."
                 rows={5}
                 {...register("notes")}
               />

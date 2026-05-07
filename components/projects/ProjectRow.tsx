@@ -51,7 +51,7 @@ export const ProjectRow = ({ project, handleEditProject }: ProjectRowProps) => {
       <TableCell className="font-semibold text-base py-4 px-2">
         <div className="flex items-center gap-2">
           <div
-            className={`h-5 w-5 rounded-lg border border-border ${
+            className={`h-2 w-2 rounded-full border border-border ${
               PROJECT_COLOR_MAP[project.color].bg
             }`}
           />

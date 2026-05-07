@@ -172,8 +172,8 @@ export function WorkSessionIdle({
                         key="Add New Project"
                         onClick={() => setProjectDialogOpen(true)}
                       >
-                        <div className="flex items-center gap-2 font-semibold text-foreground cursor-pointer group-data-highlighted:text-brand-lime-green">
-                          <Plus className="h-3 w-3 text-foreground group-data-highlighted:text-brand-lime-green" />
+                        <div className="flex items-center gap-2 font-semibold text-foreground cursor-pointer group-data-highlighted:text-brand-yellow">
+                          <Plus className="h-3 w-3 text-foreground group-data-highlighted:text-brand-yellow" />
                           Add New Project
                         </div>
                       </DropdownMenuItem>
