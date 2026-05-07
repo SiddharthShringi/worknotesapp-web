@@ -16,7 +16,7 @@ export default function WorkSession({ session }: WorkSessionProps) {
     <div className="flex gap-2">
       {/* Timeline */}
       <div className="flex flex-col items-center w-4">
-        <div className="h-2 w-2 rounded-full bg-brand-lime-green mt-2"></div>
+        <div className="h-2 w-2 rounded-full bg-brand-yellow mt-2"></div>
         <div className="w-px flex-1 bg-border mt-1"></div>
       </div>
 
