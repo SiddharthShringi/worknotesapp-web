@@ -28,4 +28,10 @@ export interface WorkSessionData {
   duration: string | null;
 }
 
+export interface GroupedWorkSessions {
+  date: string;
+  total_duration: string;
+  sessions: WorkSessionData[];
+}
+
 export type WorkSessionStage = "idle" | "running" | "completed";
