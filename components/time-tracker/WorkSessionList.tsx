@@ -1,27 +1,26 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { WorkSessionData } from "@/types/workSession.types";
+import { GroupedWorkSessions } from "@/types/workSession.types";
 import { getWorkSessions } from "@/lib/api/workSession.api";
-import { groupSessionsByDate } from "../../lib/utils/utilFns";
 import DateLabel from "../work-sessions/DateLabel";
 import WorkSession from "../work-sessions/WorkSession";
+import { getLabel, formatDuration } from "@/lib/utils/dateFn";
 
 export function WorkSessionList() {
-  const { data: workSessions = [], isLoading: loadingWorkSessions } = useQuery<
-    WorkSessionData[]
-  >({
-    queryKey: ["workSessions"],
-    queryFn: getWorkSessions,
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-  });
+  const { data: groupedSessions = [], isLoading: loadingWorkSessions } =
+    useQuery<GroupedWorkSessions[]>({
+      queryKey: ["workSessions"],
+      queryFn: getWorkSessions,
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    });
 
   if (loadingWorkSessions) {
     return <div>Loading...</div>;
   }
 
-  const groupedSessions = groupSessionsByDate(workSessions);
+  console.log("Grouped Sessions:", groupedSessions);
 
   return (
     <div>
@@ -30,7 +29,10 @@ export function WorkSessionList() {
       ) : (
         groupedSessions.map((group) => (
           <div key={group.date} className="mt-6">
-            <DateLabel label={group.label} />
+            <DateLabel
+              label={getLabel(group.date)}
+              duration={formatDuration(Number(group.total_duration) || 0)}
+            />
             <ul className="space-y-4">
               {group.sessions.map((session) => (
                 <WorkSession key={session.id} session={session} />
