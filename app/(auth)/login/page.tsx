@@ -19,7 +19,7 @@ import { AuthCard } from "@/components/auth/AuthCard";
 import { FormField } from "@/components/FormField";
 
 export default function LoginPage() {
-  const { storeToken } = useAuth();
+  const { storeToken, setUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -39,6 +39,7 @@ export default function LoginPage() {
     },
     onSuccess: (response) => {
       handleStoreToken(response, storeToken);
+      setUser(response.data.user);
       toast.success("Login successful");
       router.replace("/");
     },

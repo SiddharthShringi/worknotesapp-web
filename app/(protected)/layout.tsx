@@ -5,20 +5,29 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+import { updateTimezone } from "@/lib/api/user.api";
+import { TimeZoneParams } from "@/types/auth.types";
 
 export default function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthReady, isAuthenticated } = useAuth();
+  const { isAuthReady, isAuthenticated, user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated && isAuthReady) {
       router.replace("/login");
     }
-  }, [isAuthenticated, isAuthReady, router]);
+    if (isAuthenticated && isAuthReady && user) {
+      const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (detectedTimezone !== user.timezone) {
+        const params: TimeZoneParams = { user: { timezone: detectedTimezone } };
+        updateTimezone(params);
+      }
+    }
+  }, [isAuthenticated, isAuthReady, router, user]);
 
   if (!isAuthReady) return null;
   if (!isAuthenticated) return null;

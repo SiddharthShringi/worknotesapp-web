@@ -19,7 +19,7 @@ import { FormField } from "@/components/FormField";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { storeToken } = useAuth();
+  const { storeToken, setUser } = useAuth();
 
   const {
     register,
@@ -38,6 +38,7 @@ export default function SignupPage() {
     },
     onSuccess: (response) => {
       handleStoreToken(response, storeToken);
+      setUser(response.data.user); // Set user details in context
       toast.success("Signup successful");
       router.replace("/");
     },
