@@ -2,8 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { getToken, setToken, removeToken } from "@/lib/utils/auth";
+import { User } from "@/types/auth.types";
 
 interface AuthContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
   isAuthenticated: boolean;
   isAuthReady: boolean;
   storeToken: (token: string) => void;
@@ -13,6 +16,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthReady, setIsAuthReady] = useState<boolean>(false);
 
@@ -34,7 +38,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isAuthReady, storeToken, revokeToken }}
+      value={{
+        user,
+        setUser,
+        isAuthenticated,
+        isAuthReady,
+        storeToken,
+        revokeToken,
+      }}
     >
       {children}
     </AuthContext.Provider>

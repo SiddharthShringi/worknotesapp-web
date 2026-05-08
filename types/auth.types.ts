@@ -14,3 +14,17 @@ export interface LoginParams {
     password: string;
   };
 }
+
+export type User = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  timezone: string;
+};
+
+export type TimeZoneParams = {
+  user: {
+    timezone: string;
+  };
+};
