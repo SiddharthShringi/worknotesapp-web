@@ -36,7 +36,7 @@ export default function ProtectedLayout({
     <div className="min-h-screen flex">
       <Sidebar />
 
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 ml-64">
         <Navbar />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-7xl px-6 py-6">{children}</div>

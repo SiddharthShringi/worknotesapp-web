@@ -15,7 +15,7 @@ export default function Sidebar() {
     }`;
 
   return (
-    <aside className="w-64 border-r border-sidebar-border bg-sidebar">
+    <aside className="fixed inset-y-0 left-0 z-30 w-64 border-r border-sidebar-border bg-sidebar">
       <div className="flex h-full flex-col p-6 gap-8">
         {/* Section Title */}
         <Link
