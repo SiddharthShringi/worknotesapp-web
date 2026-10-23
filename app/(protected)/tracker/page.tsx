@@ -3,7 +3,7 @@ import { WorkSessionList } from "@/components/time-tracker/WorkSessionList";
 
 function TimeTrackerPage() {
   return (
-    <div>
+    <div className="mx-auto max-w-7xl">
       <WorkSessionContainer />
       <div className="mt-8">
         <WorkSessionList />

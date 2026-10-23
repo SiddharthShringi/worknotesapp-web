@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { ProjectDialog } from "@/components/projects/ProjectDialog";
 import { ProjectsTable } from "@/components/projects/ProjectsTable";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Project, ProjectStatus } from "@/types/project.types";
 import ProjectFilterTabs from "@/components/projects/ProjectFilterTabs";
-import { getProjects } from "@/lib/api/project.api";
 
 function ProjectPage() {
   const [open, setOpen] = useState(false);
@@ -21,7 +19,7 @@ function ProjectPage() {
   };
 
   return (
-    <div className="max-w-7xl">
+    <div className="mx-auto max-w-7xl">
       <div className="flex items-center justify-between hover:pointer">
         <h1 className="text-3xl font-bold">Projects</h1>
         <Button
