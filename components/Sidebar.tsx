@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Clock, NotebookPen, Folder } from "lucide-react";
+import { Clock, NotebookPen, Folder, ClipboardList } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -43,6 +43,12 @@ export default function Sidebar() {
               <Folder className="h-5 w-5" />
             </span>
             <span className="text-base font-medium">Projects</span>
+          </Link>
+          <Link href="/reports" className={linkClass("/reports")}>
+            <span>
+              <ClipboardList className="h-5 w-5" />
+            </span>
+            <span className="text-base font-medium">Reports</span>
           </Link>
         </nav>
       </div>
