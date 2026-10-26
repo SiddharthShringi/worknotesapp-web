@@ -25,13 +25,13 @@ export function ProjectsTable({
   handleEditProject,
   status,
 }: ProjectsTableProps) {
-  const querKey = status === "all" ? ["projects"] : ["projects", { status }];
+  const queryKey = status === "all" ? ["projects"] : ["projects", { status }];
   const queryFn =
     status === "all" ? () => getProjects() : () => getProjects({ status });
 
   const { data, isLoading } = useQuery({
-    queryKey: querKey,
-    queryFn: queryFn,
+    queryKey,
+    queryFn,
   });
 
   const projects = (data as Project[]) || [];
