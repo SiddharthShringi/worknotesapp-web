@@ -2,7 +2,6 @@
 
 import { format, addDays, parseISO } from "date-fns";
 import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -11,31 +10,33 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useState } from "react";
 
 type DateNavigatorProps = {
-  value: Date;
-  onChange: (date: Date) => void;
+  date: Date;
+  setSelectedDate: (date: Date) => void;
 };
 
-export function DateNavigator({ value, onChange }: DateNavigatorProps) {
+export function DateNavigator({ date, setSelectedDate }: DateNavigatorProps) {
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <div className="flex items-center gap-3">
       <Button
         variant="outline"
         size="icon"
         aria-label="Previous day"
-        onClick={() => onChange(addDays(value, -1))}
+        onClick={() => setSelectedDate(addDays(date, -1))}
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             className="w-[194px] justify-between font-normal"
           >
-            {format(value, "yyyy-MM-dd")}
+            {format(date, "yyyy-MM-dd")}
             <CalendarIcon className="h-4 w-4" />
           </Button>
         </PopoverTrigger>
@@ -43,11 +44,13 @@ export function DateNavigator({ value, onChange }: DateNavigatorProps) {
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode="single"
-            selected={value}
+            selected={date}
             onSelect={(date) => {
-              if (date) onChange(date);
+              if (date) {
+                setSelectedDate(date);
+                setOpen(false);
+              }
             }}
-            initialFocus
           />
         </PopoverContent>
       </Popover>
@@ -56,7 +59,7 @@ export function DateNavigator({ value, onChange }: DateNavigatorProps) {
         variant="outline"
         size="icon"
         aria-label="Next day"
-        onClick={() => onChange(addDays(value, 1))}
+        onClick={() => setSelectedDate(addDays(date, 1))}
       >
         <ChevronRight className="h-4 w-4" />
       </Button>
