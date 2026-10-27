@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -25,13 +24,13 @@ export function ProjectsTable({
   handleEditProject,
   status,
 }: ProjectsTableProps) {
-  const querKey = status === "all" ? ["projects"] : ["projects", { status }];
+  const queryKey = status === "all" ? ["projects"] : ["projects", { status }];
   const queryFn =
     status === "all" ? () => getProjects() : () => getProjects({ status });
 
   const { data, isLoading } = useQuery({
-    queryKey: querKey,
-    queryFn: queryFn,
+    queryKey,
+    queryFn,
   });
 
   const projects = (data as Project[]) || [];
