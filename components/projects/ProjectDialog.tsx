@@ -127,7 +127,7 @@ export function ProjectDialog({
 
     if (isEditMode && project) {
       updateProjectMutation.mutate(
-        { projectId: project.id, params: payload },
+        { projectId: String(project.id), params: payload },
         {
           onError: (error) => handleError(error, "update"),
           onSuccess: () => handleSuccess("update"),

@@ -1,4 +1,4 @@
-export function ReportHeader() {
+export function PageHeader() {
   return (
     <>
       <h1 className="text-3xl font-bold">Reports</h1>
