@@ -4,9 +4,10 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 
-import { ReportHeader } from "@/components/reports/ReportHeader";
-import { DateNavigator } from "@/components/reports/ReportToolbar/DateNavigator";
+import { PageHeader } from "@/components/reports/PageHeader";
 import { getReport } from "@/lib/api/report.api";
+import { ReportToolbar } from "@/components/reports/ReportToolBar";
+import { TimeByProjectCard } from "@/components/reports/TimeByProjectCard";
 
 function ReportsPage() {
   const [date, setDate] = useState<Date>(new Date());
@@ -23,11 +24,12 @@ function ReportsPage() {
     queryFn: () => getReport({ date: selectedDate }),
   });
 
+  console.log({ report });
+
   return (
     <div className="mx-auto max-w-7xl">
-      <ReportHeader />
-
-      <DateNavigator date={date} setSelectedDate={setDate} />
+      <PageHeader />
+      <ReportToolbar date={date} setSelectedDate={setDate} />
 
       {isLoading && <p>Loading report...</p>}
 
@@ -35,8 +37,7 @@ function ReportsPage() {
 
       {report && (
         <>
-          <h1 className="text-3xl my-2">{report.date}</h1>
-          <p>{report.total_duration}</p>
+          <TimeByProjectCard report={report} />
         </>
       )}
     </div>

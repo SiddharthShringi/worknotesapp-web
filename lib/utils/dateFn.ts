@@ -29,19 +29,18 @@ export const getLabel = (input: string | number | Date): string => {
 /**
  * 4. formatDuration → "1h 5m"
  */
-export const formatDuration = (seconds: number): string => {
-  if (seconds <= 0) return "0m";
+export const formatDuration = (totalSeconds: number): string => {
+  const roundedSeconds = Math.round(totalSeconds);
+  if (roundedSeconds <= 0) return "0s";
 
-  const duration = intervalToDuration({
-    start: 0,
-    end: seconds * 1000,
-  });
+  const hours = Math.floor(roundedSeconds / 3600);
+  const minutes = Math.floor((roundedSeconds % 3600) / 60);
+  const seconds = roundedSeconds % 60;
 
-  const hours = duration.hours ?? 0;
-  const minutes = duration.minutes ?? 0;
+  const parts: string[] = [];
+  if (hours > 0) parts.push(`${hours}h`);
+  if (minutes > 0) parts.push(`${minutes}m`);
+  if (seconds > 0) parts.push(`${seconds}s`);
 
-  if (hours === 0) return `${minutes}m`;
-  if (minutes === 0) return `${hours}h`;
-
-  return `${hours}h ${minutes}m`;
+  return parts.join(" ");
 };
