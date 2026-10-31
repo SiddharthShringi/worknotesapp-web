@@ -9,7 +9,7 @@ interface DailyReportProps {
   report: DailyReportType;
 }
 
-export function DetailedSessionReport({ report }: DailyReportProps) {
+export function DetailedReport({ report }: DailyReportProps) {
   return (
     <ReportCollapsible
       collapsedSummary={<CollapsedReportStats report={report} />}

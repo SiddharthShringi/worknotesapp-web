@@ -43,7 +43,7 @@ export function ReportCollapsible({
               {/* Title and Description */}
               <div className="min-w-0 space-y-1.5">
                 <h3 className="text-base font-semibold leading-6 sm:text-lg">
-                  Detailed Session Report
+                  Detailed Report
                 </h3>
 
                 <div className="text-sm leading-5 text-muted-foreground">
@@ -53,13 +53,7 @@ export function ReportCollapsible({
             </div>
 
             {/* Toggle Action */}
-            <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
-              <span className="hidden sm:inline">
-                {isOpen ? "Hide Breakdown" : "View Breakdown"}
-              </span>
-
-              <span className="sm:hidden">{isOpen ? "Hide" : "View"}</span>
-
+            <div className="flex shrink-0 items-center gap-1 text-sm font-medium text-muted-foreground">
               <ChevronDown
                 className={`h-5 w-5 transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
@@ -68,7 +62,6 @@ export function ReportCollapsible({
             </div>
           </button>
         </CollapsibleTrigger>
-
         {/* Expanded Content */}
         <CollapsibleContent className="overflow-hidden border-t data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
           <div className="p-4 sm:p-5 lg:p-6">{children}</div>

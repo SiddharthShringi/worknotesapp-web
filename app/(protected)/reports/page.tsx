@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/reports/PageHeader";
 import { getReport } from "@/lib/api/report.api";
 import { ReportToolbar } from "@/components/reports/ReportToolBar";
 import { TimeByProjectCard } from "@/components/reports/TimeByProjectCard";
-import { DetailedSessionReport } from "@/components/reports/detailed-report/DetailedSessionReport";
+import { DetailedReport } from "@/components/reports/detailed-report/DetailedReport";
 import { EmptyReport } from "@/components/reports/EmptyReport";
 import { ReportSkeleton } from "@/components/reports/ReportSkeleton";
 
@@ -46,7 +46,7 @@ function ReportsPage() {
       {isSuccess && hasReport && (
         <>
           <TimeByProjectCard report={report} />
-          <DetailedSessionReport report={report} />
+          <DetailedReport report={report} />
         </>
       )}
 

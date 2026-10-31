@@ -171,7 +171,7 @@ export function WorkSessionIdle({
                             ) : (
                               <>
                                 <FilePlusCorner className="h-4 w-4 shrink-0" />
-                                <span>Select Project</span>
+                                <span>Project</span>
                               </>
                             )}
                           </Button>

@@ -39,7 +39,7 @@ export function ReportSummary({ report }: ReportSummaryProps) {
             className="flex items-center gap-3 rounded-xl border p-4 sm:p-5"
           >
             {/* Icon */}
-            <div className="shrink-0 rounded-lg bg-muted p-2.5 text-brand-yellow">
+            <div className="shrink-0 rounded-lg bg-muted p-2.5">
               <Icon className="h-5 w-5" aria-hidden="true" />
             </div>
 

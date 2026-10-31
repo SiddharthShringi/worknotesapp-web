@@ -3,8 +3,10 @@
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+
 import { updateTimezone } from "@/lib/api/user.api";
 import { TimeZoneParams } from "@/types/auth.types";
 
@@ -20,26 +22,33 @@ export default function ProtectedLayout({
     if (!isAuthenticated && isAuthReady) {
       router.replace("/login");
     }
+
     if (isAuthenticated && isAuthReady && user) {
       const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
       if (detectedTimezone !== user.timezone) {
-        const params: TimeZoneParams = { user: { timezone: detectedTimezone } };
+        const params: TimeZoneParams = {
+          user: { timezone: detectedTimezone },
+        };
+
         updateTimezone(params);
       }
     }
   }, [isAuthenticated, isAuthReady, router, user]);
 
-  if (!isAuthReady) return null;
-  if (!isAuthenticated) return null;
+  if (!isAuthReady || !isAuthenticated) return null;
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex min-h-dvh overflow-x-hidden">
       <Sidebar />
 
-      <div className="flex flex-col flex-1 ml-64">
+      <div className="ml-16 flex min-w-0 flex-1 flex-col lg:ml-64">
         <Navbar />
-        <main className="flex-1 overflow-y-auto">
-          <div className="px-6 py-6">{children}</div>
+
+        <main className="min-w-0 flex-1">
+          <div className="px-4 py-4 sm:px-5 sm:py-5 lg:px-7 lg:py-6">
+            {children}
+          </div>
         </main>
       </div>
     </div>

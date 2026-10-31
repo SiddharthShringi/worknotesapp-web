@@ -177,7 +177,7 @@ export function WorkSessionCompleted({
                               <>
                                 <FilePlusCorner className="h-4 w-4 shrink-0 text-muted-foreground" />
                                 <span className="text-muted-foreground">
-                                  Select project
+                                  project
                                 </span>
                               </>
                             )}

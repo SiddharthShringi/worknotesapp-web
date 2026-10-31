@@ -1,10 +1,13 @@
 export function PageHeader() {
   return (
-    <>
-      <h1 className="text-3xl font-bold">Reports</h1>
-      <p className="text-muted-foreground mt-2">
-        See where your time went on a single day.
+    <header className="space-y-1">
+      <h1 className="text-2xl font-semibold leading-tight tracking-tight text-foreground sm:text-3xl">
+        Reports
+      </h1>
+
+      <p className="text-sm leading-5 text-muted-foreground sm:text-base sm:leading-6">
+        A clearer picture of your focused work.
       </p>
-    </>
+    </header>
   );
 }
