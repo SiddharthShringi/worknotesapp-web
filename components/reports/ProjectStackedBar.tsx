@@ -1,4 +1,5 @@
 import { formatDuration } from "@/lib/utils/dateFn";
+import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
 
 interface Project {
   id: number;
@@ -34,13 +35,14 @@ export function ProjectStackedBar({
         // Show the label only if the segment occupies at least 12%.
         const showLabel = width >= 12;
 
+        const indicatorColor = PROJECT_COLOR_MAP[project.color].bg;
+
         return (
           <div
             key={project.id}
-            className="flex h-full shrink-0 items-center justify-center overflow-hidden"
+            className={`flex h-full shrink-0 items-center justify-center overflow-hidden ${indicatorColor}`}
             style={{
               width: `${width}%`,
-              backgroundColor: project.color,
             }}
             title={`${project.name}: ${formatDuration(project.duration)}`}
           >

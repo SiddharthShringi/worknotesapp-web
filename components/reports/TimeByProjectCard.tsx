@@ -34,7 +34,7 @@ export function TimeByProjectCard({ report }: TimeByProjectCardProps) {
     sessions_duration: report.projects.map((p) => p.duration),
   });
   return (
-    <div className="px-3 py-4 border rounded-xl mt-4">
+    <div className="px-3 border rounded-xl mt-4 bg-card">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold my-1">Time By Project</h2>

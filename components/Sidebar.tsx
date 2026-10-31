@@ -26,7 +26,7 @@ export default function Sidebar() {
             <NotebookPen className="h-5 w-5" />
           </span>
           <p className="text-2xl font-geist font-bold text-brand-yellow dark:text-brand-yellow">
-            WorkNotes
+            <span className="text-foreground">Work</span>Notes
           </p>
         </Link>
 

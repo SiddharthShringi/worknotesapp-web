@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/reports/PageHeader";
 import { getReport } from "@/lib/api/report.api";
 import { ReportToolbar } from "@/components/reports/ReportToolBar";
 import { TimeByProjectCard } from "@/components/reports/TimeByProjectCard";
+import { DetailedSessionReport } from "@/components/reports/detailed-report/DetailedSessionReport";
 
 function ReportsPage() {
   const [date, setDate] = useState<Date>(new Date());
@@ -38,6 +39,7 @@ function ReportsPage() {
       {report && (
         <>
           <TimeByProjectCard report={report} />
+          <DetailedSessionReport report={report} />
         </>
       )}
     </div>

@@ -9,7 +9,7 @@ export type DateNavigatorProps = {
 
 export function ReportToolbar({ date, setSelectedDate }: DateNavigatorProps) {
   return (
-    <div className="mt-2 px-3 py-4 border rounded-xl">
+    <div className="mt-2 px-3 py-4 border rounded-xl bg-card">
       <h2 className="text-lg font-semibold my-1">Report Date</h2>
       <div className="flex items-center justify-between">
         <div>

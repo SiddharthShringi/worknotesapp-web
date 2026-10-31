@@ -25,7 +25,7 @@ type ProjectReportTableProps = {
 
 export function ProjectReportTable({ rows }: ProjectReportTableProps) {
   return (
-    <div className="my-5 overflow-hidden rounded-lg border">
+    <div className="my-5 overflow-hidden">
       <Table>
         <TableHeader className="bg-muted/50">
           <TableRow>
