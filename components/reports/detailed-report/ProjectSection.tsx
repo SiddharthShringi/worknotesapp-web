@@ -12,22 +12,26 @@ export function ProjectSection({ project }: ProjectSectionProps) {
   const indicatorColor = PROJECT_COLOR_MAP[project.color].bg;
 
   return (
-    <section className="rounded-xl border p-4 space-y-4">
+    <section className="space-y-5 p-4 sm:p-5">
       {/* Project Header */}
-      <div className="flex items-center justify-between border-b pb-3">
-        <div className="flex items-center gap-2">
-          <span className={`h-2.5 w-2.5 rounded-full ${indicatorColor}`} />
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+        {/* Project Name and Session Count */}
+        <div className="flex min-w-0 flex-wrap items-center gap-2.5">
+          <span className={`h-3 w-3 shrink-0 rounded-full ${indicatorColor}`} />
 
-          <h4 className="text-sm font-semibold">{project.name}</h4>
+          <h4 className="min-w-0 break-words text-base font-semibold leading-6 sm:text-lg">
+            {project.name}
+          </h4>
 
-          <span className="text-xs text-muted-foreground rounded bg-muted px-2 py-1">
+          <span className="whitespace-nowrap rounded-md bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {pluralize(project.sessions.length, "session")}
           </span>
         </div>
 
-        <p className="text-xs text-muted-foreground">
+        {/* Total Duration */}
+        <p className="whitespace-nowrap text-sm text-muted-foreground">
           Total:{" "}
-          <span className="font-semibold text-foreground">
+          <span className="font-semibold text-foreground tabular-nums">
             {formatDuration(project.duration)}
           </span>
         </p>

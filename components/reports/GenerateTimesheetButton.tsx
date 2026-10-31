@@ -1,17 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 
-export function GenerateTimesheetButton() {
+interface GenerateTimesheetButtonProps {
+  onGenerate?: () => void;
+  disabled?: boolean;
+}
+
+export function GenerateTimesheetButton({
+  onGenerate,
+  disabled = false,
+}: GenerateTimesheetButtonProps) {
   return (
     <Button
-      variant="brand"
-      disabled
-      onClick={() => {
-        console.log("Download");
-      }}
+      variant="outline"
+      size="default"
+      disabled={disabled}
+      onClick={onGenerate}
+      className="gap-2 text-sm font-medium"
     >
-      <FileText className="h-4 w-4" />
-      <p>Download</p>
+      <FileText className="h-4 w-4" aria-hidden="true" />
+      <span>Generate Timesheet</span>
     </Button>
   );
 }

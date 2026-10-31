@@ -16,11 +16,11 @@ export function ReportSummary({ report }: ReportSummaryProps) {
     },
     {
       label: "Sessions",
-      value: `${report.total_sessions} Sessions`,
+      value: report.total_sessions.toString(),
       icon: Zap,
     },
     {
-      label: "Started AT",
+      label: "Started At",
       value: report.first_session_start
         ? formatTime(report.first_session_start)
         : "—",
@@ -29,25 +29,29 @@ export function ReportSummary({ report }: ReportSummaryProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       {metrics.map((metric) => {
         const Icon = metric.icon;
 
         return (
           <div
             key={metric.label}
-            className="rounded-lg border p-3 flex items-center gap-3"
+            className="flex items-center gap-3 rounded-xl border p-4 sm:p-5"
           >
-            <div className="text-brand-yellow dark:text-brand-yellow rounded-md bg-muted p-2">
-              <Icon className="h-4 w-4" />
+            {/* Icon */}
+            <div className="shrink-0 rounded-lg bg-muted p-2.5 text-brand-yellow">
+              <Icon className="h-5 w-5" aria-hidden="true" />
             </div>
 
-            <div>
-              <p className="text-[12px] uppercase tracking-wider text-muted-foreground">
+            {/* Metric details */}
+            <div className="min-w-0 space-y-1">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground sm:text-sm">
                 {metric.label}
               </p>
 
-              <p className="text-sm font-semibold mt-1">{metric.value}</p>
+              <p className="text-lg font-semibold leading-tight tabular-nums sm:text-xl">
+                {metric.value}
+              </p>
             </div>
           </div>
         );

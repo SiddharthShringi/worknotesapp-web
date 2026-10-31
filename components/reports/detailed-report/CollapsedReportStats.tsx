@@ -7,30 +7,37 @@ interface CollapsedReportStatsProps {
 
 export function CollapsedReportStats({ report }: CollapsedReportStatsProps) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-      <span>
-        <strong className="text-foreground font-medium">
+    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm leading-5">
+      {/* Focus Duration */}
+      <span className="whitespace-nowrap">
+        <strong className="font-semibold text-foreground tabular-nums">
           {formatDuration(report.total_duration)}
         </strong>{" "}
-        focused
+        <span className="text-muted-foreground">focused</span>
       </span>
 
-      <span className="text-muted-foreground/50">·</span>
+      <span className="text-muted-foreground/50" aria-hidden="true">
+        ·
+      </span>
 
-      <span>
-        <strong className="text-foreground font-medium">
+      {/* Sessions */}
+      <span className="whitespace-nowrap">
+        <strong className="font-semibold text-foreground tabular-nums">
           {report.total_sessions}
         </strong>{" "}
-        sessions
+        <span className="text-muted-foreground">sessions</span>
       </span>
 
-      <span className="text-muted-foreground/50">·</span>
+      <span className="text-muted-foreground/50" aria-hidden="true">
+        ·
+      </span>
 
-      <span>
-        <strong className="text-foreground font-medium">
+      {/* Projects */}
+      <span className="whitespace-nowrap">
+        <strong className="font-semibold text-foreground tabular-nums">
           {report.projects.length}
         </strong>{" "}
-        projects
+        <span className="text-muted-foreground">projects</span>
       </span>
     </div>
   );

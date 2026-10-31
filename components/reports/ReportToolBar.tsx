@@ -9,17 +9,31 @@ export type DateNavigatorProps = {
 
 export function ReportToolbar({ date, setSelectedDate }: DateNavigatorProps) {
   return (
-    <div className="mt-2 px-3 py-4 border rounded-xl bg-card">
-      <h2 className="text-lg font-semibold my-1">Report Date</h2>
-      <div className="flex items-center justify-between">
-        <div>
-          <DateNavigator date={date} setSelectedDate={setSelectedDate} />
+    <section className="mt-4 rounded-xl border bg-card p-4 sm:p-5">
+      {/* Toolbar Header */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="space-y-1">
+          <h2 className="text-base font-semibold leading-6 sm:text-lg">
+            Daily Report
+          </h2>
+
+          <p className="text-sm text-muted-foreground">
+            Navigate dates and manage your reports.
+          </p>
         </div>
-        <div className="flex items-center gap-3 justif">
+      </div>
+
+      {/* Toolbar Controls */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        {/* Date Navigation */}
+        <DateNavigator date={date} setSelectedDate={setSelectedDate} />
+
+        {/* Report Actions */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <DownloadButton />
           <GenerateTimesheetButton />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

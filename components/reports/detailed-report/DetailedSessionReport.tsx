@@ -15,8 +15,13 @@ export function DetailedSessionReport({ report }: DailyReportProps) {
       collapsedSummary={<CollapsedReportStats report={report} />}
       expandedDescription="A breakdown of your work sessions, activities, and notes for the day."
     >
-      <ReportSummary report={report} />
-      <ProjectList projects={report.projects} />
+      <div className="space-y-6">
+        {/* Daily Metrics */}
+        <ReportSummary report={report} />
+
+        {/* Project Breakdown */}
+        <ProjectList projects={report.projects} />
+      </div>
     </ReportCollapsible>
   );
 }

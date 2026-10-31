@@ -26,28 +26,42 @@ export function ReportCollapsible({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <div className="rounded-xl border bg-card overflow-hidden mt-3">
+      <div className="mt-4 overflow-hidden rounded-xl border bg-card">
+        {/* Collapsible Header */}
         <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between gap-4 p-4 text-left hover:bg-muted/30 transition-colors">
-            <div className="flex items-center gap-3 min-w-0">
-              <FileText className="h-4 w-4 shrink-0" />
+          <button
+            type="button"
+            className="flex w-full items-center justify-between gap-4 p-4 text-left transition-colors hover:bg-muted/30 sm:p-5"
+          >
+            {/* Header Content */}
+            <div className="flex min-w-0 items-start gap-3">
+              {/* Icon */}
+              <div className="mt-0.5 shrink-0 rounded-lg bg-muted p-2">
+                <FileText className="h-5 w-5 text-muted-foreground" />
+              </div>
 
-              <div className="min-w-0">
-                <h3 className="text-sm font-semibold">
+              {/* Title and Description */}
+              <div className="min-w-0 space-y-1.5">
+                <h3 className="text-base font-semibold leading-6 sm:text-lg">
                   Detailed Session Report
                 </h3>
 
-                <div className="mt-1 text-xs text-muted-foreground">
+                <div className="text-sm leading-5 text-muted-foreground">
                   {isOpen ? expandedDescription : collapsedSummary}
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0">
-              <span>{isOpen ? "Hide Breakdown" : "View Breakdown"}</span>
+            {/* Toggle Action */}
+            <div className="flex shrink-0 items-center gap-2 text-sm font-medium text-muted-foreground">
+              <span className="hidden sm:inline">
+                {isOpen ? "Hide Breakdown" : "View Breakdown"}
+              </span>
+
+              <span className="sm:hidden">{isOpen ? "Hide" : "View"}</span>
 
               <ChevronDown
-                className={`h-4 w-4 transition-transform duration-200 ${
+                className={`h-5 w-5 transition-transform duration-200 ${
                   isOpen ? "rotate-180" : ""
                 }`}
               />
@@ -55,8 +69,9 @@ export function ReportCollapsible({
           </button>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
-          <div className="border-t p-4 space-y-5">{children}</div>
+        {/* Expanded Content */}
+        <CollapsibleContent className="overflow-hidden border-t data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
+          <div className="p-4 sm:p-5 lg:p-6">{children}</div>
         </CollapsibleContent>
       </div>
     </Collapsible>
