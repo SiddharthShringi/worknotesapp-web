@@ -26,25 +26,6 @@ export const getLabel = (input: string | number | Date): string => {
   return formatDate(date);
 };
 
-/**
- * 4. formatDuration → "1h 5m"
- */
-// export const formatDuration = (totalSeconds: number): string => {
-//   const roundedSeconds = Math.round(totalSeconds);
-//   if (roundedSeconds <= 0) return "0s";
-
-//   const hours = Math.floor(roundedSeconds / 3600);
-//   const minutes = Math.floor((roundedSeconds % 3600) / 60);
-//   const seconds = roundedSeconds % 60;
-
-//   const parts: string[] = [];
-//   if (hours > 0) parts.push(`${hours}h`);
-//   if (minutes > 0) parts.push(`${minutes}m`);
-//   if (seconds > 0) parts.push(`${seconds}s`);
-
-//   return parts.join(" ");
-// };
-
 export function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -67,17 +48,4 @@ export function formatTime(date: string): string {
     minute: "2-digit",
     hour12: true,
   }).format(new Date(date));
-}
-
-export function hasNotes(notes: string | null): boolean {
-  if (!notes) return false;
-
-  return !["", "none"].includes(notes.trim().toLowerCase());
-}
-
-export function formatNotes(notes: string): string[] {
-  return notes
-    .split("\n")
-    .map((line) => line.replace(/^-\s*/, "").trim())
-    .filter(Boolean);
 }

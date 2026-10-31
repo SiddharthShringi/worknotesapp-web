@@ -12,14 +12,14 @@ export function ProjectSection({ project }: ProjectSectionProps) {
   const indicatorColor = PROJECT_COLOR_MAP[project.color].bg;
 
   return (
-    <section className="space-y-5 p-4 sm:p-5">
+    <section className="space-y-5 p-4 sm:px-3 sm:py-2">
       {/* Project Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-2">
         {/* Project Name and Session Count */}
         <div className="flex min-w-0 flex-wrap items-center gap-2.5">
           <span className={`h-3 w-3 shrink-0 rounded-full ${indicatorColor}`} />
 
-          <h4 className="min-w-0 break-words text-base font-semibold leading-6 sm:text-lg">
+          <h4 className="min-w-0 wrap-break-word text-base font-semibold leading-6 sm:text-lg">
             {project.name}
           </h4>
 
