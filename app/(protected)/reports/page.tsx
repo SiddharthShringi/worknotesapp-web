@@ -4,9 +4,13 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 
-import { ReportHeader } from "@/components/reports/ReportHeader";
-import { DateNavigator } from "@/components/reports/ReportToolbar/DateNavigator";
+import { PageHeader } from "@/components/reports/PageHeader";
 import { getReport } from "@/lib/api/report.api";
+import { ReportToolbar } from "@/components/reports/ReportToolBar";
+import { TimeByProjectCard } from "@/components/reports/TimeByProjectCard";
+import { DetailedReport } from "@/components/reports/detailed-report/DetailedReport";
+import { EmptyReport } from "@/components/reports/EmptyReport";
+import { ReportSkeleton } from "@/components/reports/ReportSkeleton";
 
 function ReportsPage() {
   const [date, setDate] = useState<Date>(new Date());
@@ -16,29 +20,37 @@ function ReportsPage() {
   const {
     data: report,
     isLoading,
-    isFetching,
     isError,
+    isSuccess,
   } = useQuery({
     queryKey: ["daily-report", selectedDate],
     queryFn: () => getReport({ date: selectedDate }),
   });
 
+  const hasReport = report && report.total_sessions > 0;
+
   return (
     <div className="mx-auto max-w-7xl">
-      <ReportHeader />
+      <PageHeader />
 
-      <DateNavigator date={date} setSelectedDate={setDate} />
+      <ReportToolbar date={date} setSelectedDate={setDate} />
 
-      {isLoading && <p>Loading report...</p>}
+      {isLoading && <ReportSkeleton />}
 
-      {isError && !report && <p>Failed to load report. Please try again.</p>}
+      {isError && (
+        <p className="text-sm text-destructive mt-4">
+          Failed to load report. Please try again.
+        </p>
+      )}
 
-      {report && (
+      {isSuccess && hasReport && (
         <>
-          <h1 className="text-3xl my-2">{report.date}</h1>
-          <p>{report.total_duration}</p>
+          <TimeByProjectCard report={report} />
+          <DetailedReport report={report} />
         </>
       )}
+
+      {isSuccess && !hasReport && <EmptyReport date={date} />}
     </div>
   );
 }

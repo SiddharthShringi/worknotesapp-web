@@ -1,24 +1,30 @@
 "use client";
+
 import { useForm, Controller } from "react-hook-form";
+
 import {
   workSessionSchema,
   WorkSessionFormData,
 } from "@/lib/validations/workSession.schema";
+
 import { cn } from "@/lib/utils";
 import { WorkSession } from "@/types/workSession.types";
 import { Project } from "@/types/project.types";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FilePlusCorner, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+
 import { PROJECT_COLOR_MAP } from "@/lib/constants/project-colors";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateWorkSession } from "@/lib/api/workSession.api";
@@ -85,35 +91,45 @@ export function WorkSessionCompleted({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="mx-auto w-full max-w-4xl">
       {/* Header */}
-      <div className="text-center mb-6">
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-          Work Session Completed
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
+      <div className="mb-3 space-y-0.5 sm:mb-4">
+        <h2 className="text-lg font-semibold leading-7 tracking-tight text-foreground sm:text-xl">
+          Work session completed
+        </h2>
+
+        <p className="text-sm leading-5 text-muted-foreground">
           Reflect and save your session
         </p>
       </div>
 
-      <Card>
-        <CardContent className="p-6">
+      <Card className="rounded-xl">
+        <CardContent className="p-3 sm:p-4">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-5"
+            className="space-y-3 sm:space-y-4"
           >
-            {/* Row: Intent + Project */}
-            <div className="flex gap-3 items-start">
+            {/* Intent and Project */}
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-[minmax(0,1fr)_192px] sm:gap-3 sm:items-start">
               {/* Intent */}
-              <div className="flex flex-col flex-1">
+              <div className="min-w-0 space-y-1">
+                <label
+                  htmlFor="intent"
+                  className="text-sm font-medium text-foreground"
+                >
+                  What did you work on?
+                </label>
+
                 <Input
                   id="intent"
-                  placeholder="What was your intent?"
+                  placeholder="Describe your task"
                   aria-invalid={!!errors.intent}
                   {...register("intent")}
+                  className="h-9 text-sm sm:text-base"
                 />
+
                 {errors.intent && (
-                  <p className="text-destructive text-sm mt-1">
+                  <p className="text-xs leading-5 text-destructive">
                     {errors.intent.message}
                   </p>
                 )}
@@ -129,37 +145,46 @@ export function WorkSessionCompleted({
                   );
 
                   return (
-                    <div className="flex flex-col">
+                    <div className="min-w-0 space-y-1">
+                      <label className="text-sm font-medium text-foreground">
+                        Project
+                      </label>
+
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
+                            type="button"
                             variant="outline"
                             className={cn(
-                              "h-10 shrink-0 min-w-[140px] justify-start",
+                              "h-9 w-full justify-start gap-2 px-3 text-sm font-normal",
                               errors.projectId &&
                                 !field.value &&
                                 "border-destructive",
                             )}
                           >
                             {selectedProject ? (
-                              <div className="flex items-center gap-2">
-                                <div
-                                  className={`h-2 w-2 rounded-full border ${
+                              <>
+                                <span
+                                  className={`h-2.5 w-2.5 shrink-0 rounded-full ${
                                     PROJECT_COLOR_MAP[selectedProject.color].bg
                                   }`}
                                 />
-                                {selectedProject.name}
-                              </div>
+                                <span className="truncate">
+                                  {selectedProject.name}
+                                </span>
+                              </>
                             ) : (
                               <>
-                                <FilePlusCorner className="h-4 w-4" />
-                                Project
+                                <FilePlusCorner className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                <span className="text-muted-foreground">
+                                  project
+                                </span>
                               </>
                             )}
                           </Button>
                         </DropdownMenuTrigger>
 
-                        <DropdownMenuContent>
+                        <DropdownMenuContent align="start" className="w-56">
                           {projects.map((project) => (
                             <DropdownMenuItem
                               key={project.id}
@@ -168,21 +193,19 @@ export function WorkSessionCompleted({
                                 clearErrors("projectId");
                               }}
                             >
-                              <div className="flex items-center gap-2">
-                                <div
-                                  className={`h-3 w-3 rounded-full border ${
-                                    PROJECT_COLOR_MAP[project.color].bg
-                                  }`}
-                                />
-                                {project.name}
-                              </div>
+                              <span
+                                className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                                  PROJECT_COLOR_MAP[project.color].bg
+                                }`}
+                              />
+                              <span className="truncate">{project.name}</span>
                             </DropdownMenuItem>
                           ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
 
                       {errors.projectId && (
-                        <p className="text-destructive text-sm mt-1">
+                        <p className="text-xs leading-5 text-destructive">
                           {errors.projectId.message}
                         </p>
                       )}
@@ -193,24 +216,45 @@ export function WorkSessionCompleted({
             </div>
 
             {/* Notes */}
-            <div className="flex flex-col gap-1">
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center justify-between gap-1">
+                <label
+                  htmlFor="notes"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Session notes
+                </label>
+
+                <span className="text-xs text-muted-foreground">
+                  Markdown supported
+                </span>
+              </div>
+
               <Textarea
-                placeholder="Write notes using Markdown… (- item, 1. step) Add links([text](url)) if needed."
-                rows={5}
+                id="notes"
+                placeholder="Add key points, progress, decisions, or next steps..."
+                rows={3}
                 {...register("notes")}
+                className="min-h-24 resize-y text-sm leading-6 sm:text-base"
               />
+
               {errors.notes && (
-                <p className="text-destructive text-sm">
+                <p className="text-xs leading-5 text-destructive">
                   {errors.notes.message}
                 </p>
               )}
             </div>
 
-            {/* Submit */}
-            <div className="flex justify-end">
-              <Button type="submit" size="lg" className="px-6 flex gap-2">
-                <Save className="size-4" />
-                Save
+            {/* Save */}
+            <div className="flex justify-end border-t pt-3">
+              <Button
+                type="submit"
+                size="default"
+                disabled={mutation.isPending}
+                className="h-9 gap-2 px-5 text-sm font-medium"
+              >
+                <Save className="h-4 w-4" />
+                {mutation.isPending ? "Saving..." : "Save session"}
               </Button>
             </div>
           </form>

@@ -1,4 +1,4 @@
-import { format, isToday, isYesterday, intervalToDuration } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 
 /**
  * 1. getLocalDate → "DD-MM-YYYY"
@@ -26,22 +26,26 @@ export const getLabel = (input: string | number | Date): string => {
   return formatDate(date);
 };
 
-/**
- * 4. formatDuration → "1h 5m"
- */
-export const formatDuration = (seconds: number): string => {
-  if (seconds <= 0) return "0m";
+export function formatDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
 
-  const duration = intervalToDuration({
-    start: 0,
-    end: seconds * 1000,
-  });
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
 
-  const hours = duration.hours ?? 0;
-  const minutes = duration.minutes ?? 0;
+  if (minutes > 0) {
+    return `${minutes}m ${remainingSeconds}s`;
+  }
 
-  if (hours === 0) return `${minutes}m`;
-  if (minutes === 0) return `${hours}h`;
+  return `${remainingSeconds}s`;
+}
 
-  return `${hours}h ${minutes}m`;
-};
+export function formatTime(date: string): string {
+  return new Intl.DateTimeFormat("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(new Date(date));
+}

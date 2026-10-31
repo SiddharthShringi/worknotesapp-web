@@ -12,54 +12,60 @@ type WorkSessionProps = {
 
 export default function WorkSession({ session }: WorkSessionProps) {
   const { intent, duration, project, started_at, notes } = session;
+
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-3">
       {/* Timeline */}
-      <div className="flex flex-col items-center w-4">
-        <div className="h-2 w-2 rounded-full bg-brand-yellow mt-2"></div>
-        <div className="w-px flex-1 bg-border mt-1"></div>
+      <div className="flex w-4 shrink-0 flex-col items-center">
+        <div className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-brand-yellow" />
+        <div className="mt-1 w-px flex-1 bg-border" />
       </div>
 
-      {/* Content */}
-      <div className="flex-1 space-y-1">
-        {/* Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            {/* Intent */}
-            <p className="text-base font-semibold text-foreground">{intent}</p>
+      {/* Session Content */}
+      <div className="min-w-0 flex-1 space-y-3 pb-5">
+        {/* Session Header */}
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          {/* Intent and Metadata */}
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-2">
+            {/* Session Intent */}
+            <h3 className="text-base font-semibold leading-6 text-foreground">
+              {intent}
+            </h3>
 
-            {/* Metadata */}
-            <div className="flex items-center gap-3 mt-1">
-              <Badge
-                variant="secondary"
-                className="flex items-center gap-1 text-sm"
-              >
-                <Clock size={15} />
-                <span>{format(new Date(started_at), "h:mm a")}</span>
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="flex items-center gap-1 text-sm"
-              >
-                <div
-                  className={`h-2 w-2 rounded-lg border border-border ${
-                    PROJECT_COLOR_MAP[project.color].bg
-                  }`}
-                />
-                <span>{project.name}</span>
-              </Badge>
-            </div>
+            {/* Started At */}
+            <Badge
+              variant="secondary"
+              className="h-6 shrink-0 gap-1.5 px-2 text-xs font-medium text-foreground/80 sm:text-sm"
+            >
+              <Clock className="h-3.5 w-3.5" />
+              <span className="tabular-nums">
+                {format(new Date(started_at), "h:mm a")}
+              </span>
+            </Badge>
+
+            {/* Project */}
+            <Badge
+              variant="secondary"
+              className="h-6 max-w-full shrink gap-1.5 px-2 text-xs font-medium text-foreground/80 sm:text-sm"
+            >
+              <span
+                className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                  PROJECT_COLOR_MAP[project.color].bg
+                }`}
+              />
+              <span className="truncate">{project.name}</span>
+            </Badge>
           </div>
 
           {/* Duration */}
-          <p className="text-base font-semibold text-foreground/80 whitespace-nowrap">
+          <p className="shrink-0 whitespace-nowrap text-sm font-semibold tabular-nums text-foreground sm:text-base">
             {formatDuration(Number(duration) || 0)}
           </p>
         </div>
 
-        {/* Notes */}
+        {/* Session Notes */}
         {notes && (
-          <div className="mt-2 w-full">
+          <div className="w-full text-sm leading-6 sm:text-base">
             <Markdown>{notes}</Markdown>
           </div>
         )}

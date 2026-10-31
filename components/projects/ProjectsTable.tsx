@@ -40,28 +40,43 @@ export function ProjectsTable({
   }
 
   return (
-    <Table className="my-5">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="px-2">Name</TableHead>
-          <TableHead className="px-2">Description</TableHead>
-          <TableHead className="px-2">Status</TableHead>
-          <TableHead className="text-right px-2">Action</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {isLoading &&
-          Array.from({ length: 5 }).map((_, i) => <TableSkeletonRow key={i} />)}
-        {!isLoading &&
-          projects.length > 0 &&
-          projects.map((project) => (
-            <ProjectRow
-              key={project.id}
-              project={project}
-              handleEditProject={handleEditProject}
-            />
-          ))}
-      </TableBody>
-    </Table>
+    <div className="my-4 overflow-hidden rounded-lg sm:my-5">
+      <div className="overflow-x-auto">
+        <Table className="min-w-[600px]">
+          <TableHeader>
+            <TableRow className="bg-muted/40 hover:bg-muted/40">
+              <TableHead className="h-10 px-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Name
+              </TableHead>
+              <TableHead className="h-10 px-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Description
+              </TableHead>
+              <TableHead className="h-10 px-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Status
+              </TableHead>
+              <TableHead className="h-10 px-4 text-right text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Action
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {isLoading &&
+              Array.from({ length: 5 }).map((_, i) => (
+                <TableSkeletonRow key={i} />
+              ))}
+
+            {!isLoading &&
+              projects.map((project) => (
+                <ProjectRow
+                  key={project.id}
+                  project={project}
+                  handleEditProject={handleEditProject}
+                />
+              ))}
+          </TableBody>
+        </Table>
+      </div>
+    </div>
   );
 }

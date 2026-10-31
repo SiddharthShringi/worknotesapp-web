@@ -17,14 +17,14 @@ export interface ProjectReport {
   color: ProjectColor;
   name: string;
   duration: number;
-  sessions: ProjectSessions[];
+  sessions: ProjectSession[];
 }
 
-export interface ProjectSessions {
+export interface ProjectSession {
   id: number;
   intent: string;
   started_at: string | null;
-  project: {
+  project?: {
     name: string;
     color: ProjectColor;
   };
