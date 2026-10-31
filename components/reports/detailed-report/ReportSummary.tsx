@@ -38,7 +38,7 @@ export function ReportSummary({ report }: ReportSummaryProps) {
             key={metric.label}
             className="rounded-lg border p-3 flex items-center gap-3"
           >
-            <div className="rounded-md bg-muted p-2">
+            <div className="text-brand-yellow dark:text-brand-yellow rounded-md bg-muted p-2">
               <Icon className="h-4 w-4" />
             </div>
 

@@ -9,6 +9,8 @@ import { getReport } from "@/lib/api/report.api";
 import { ReportToolbar } from "@/components/reports/ReportToolBar";
 import { TimeByProjectCard } from "@/components/reports/TimeByProjectCard";
 import { DetailedSessionReport } from "@/components/reports/detailed-report/DetailedSessionReport";
+import { EmptyReport } from "@/components/reports/EmptyReport";
+import { ReportSkeleton } from "@/components/reports/ReportSkeleton";
 
 function ReportsPage() {
   const [date, setDate] = useState<Date>(new Date());
@@ -18,30 +20,37 @@ function ReportsPage() {
   const {
     data: report,
     isLoading,
-    isFetching,
     isError,
+    isSuccess,
   } = useQuery({
     queryKey: ["daily-report", selectedDate],
     queryFn: () => getReport({ date: selectedDate }),
   });
 
-  console.log({ report });
+  const hasReport = report && report.total_sessions > 0;
 
   return (
     <div className="mx-auto max-w-7xl">
       <PageHeader />
+
       <ReportToolbar date={date} setSelectedDate={setDate} />
 
-      {isLoading && <p>Loading report...</p>}
+      {isLoading && <ReportSkeleton />}
 
-      {isError && !report && <p>Failed to load report. Please try again.</p>}
+      {isError && (
+        <p className="text-sm text-destructive mt-4">
+          Failed to load report. Please try again.
+        </p>
+      )}
 
-      {report && (
+      {isSuccess && hasReport && (
         <>
           <TimeByProjectCard report={report} />
           <DetailedSessionReport report={report} />
         </>
       )}
+
+      {isSuccess && !hasReport && <EmptyReport date={date} />}
     </div>
   );
 }
