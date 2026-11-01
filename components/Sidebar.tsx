@@ -37,11 +37,11 @@ export default function Sidebar() {
           aria-label="WorkNotes home"
           className="mb-8 flex h-10 items-center justify-center gap-2 lg:justify-start lg:px-2"
         >
-          <NotebookPen className="h-5 w-5 shrink-0 text-brand-yellow" />
+          <NotebookPen className="h-5 w-5 shrink-0 text-brand" />
 
           <span className="hidden font-geist text-xl font-bold tracking-tight lg:inline">
             <span className="text-foreground">Work</span>
-            <span className="text-brand-yellow">Notes</span>
+            <span className="text-brand">Notes</span>
           </span>
         </Link>
 

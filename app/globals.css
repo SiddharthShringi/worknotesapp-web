@@ -6,9 +6,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-yellow: var(--brand_yellow);
-  --color-brand-graphite: var(--brand-graphite);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: Inter, sans-serif;
@@ -42,7 +39,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-brand-yellow: var(--brand-yellow);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
   --color-brand-blue: var(--brand-blue);
   --color-brand-graphite: var(--brand-graphite);
   --radius-sm: calc(var(--radius) - 4px);
@@ -92,9 +90,6 @@
 }
 
 :root {
-  --brand-yellow: oklch(79.5% 0.184 86.047);
-  --brand-blue: oklch(0.55 0.1 260.24);
-  --brand-graphite: oklch(0.35 0.02 277.11);
   --radius: 0.35rem;
   --background: oklch(0.9551 0 0);
   --foreground: oklch(0.3211 0 0);
@@ -139,6 +134,10 @@
   --sidebar-accent-foreground: oklch(0.3211 0 0);
   --sidebar-border: oklch(0.8576 0 0);
   --sidebar-ring: oklch(0.4891 0 0);
+  --brand: oklch(0.4587 0.2435 266.81);
+  --brand-foreground: oklch(1 0 0);
+  --brand-blue: oklch(0.55 0.1 260.24);
+  --brand-graphite: oklch(0.35 0.02 277.11);
   --destructive-foreground: oklch(1 0 0);
   --font-sans: Montserrat, sans-serif;
   --font-serif: Georgia, serif;
@@ -168,9 +167,6 @@
 }
 
 .dark {
-  --brand-yellow: oklch(97.3% 0.071 103.193);
-  --brand-blue: oklch(0.72 0.09 260.24);
-  --brand-graphite: oklch(0.55 0.02 277.11);
   --background: oklch(0.2178 0 0);
   --foreground: oklch(0.8853 0 0);
   --card: oklch(0.2435 0 0);
@@ -214,7 +210,8 @@
   --sidebar-accent-foreground: oklch(0.8853 0 0);
   --sidebar-border: oklch(0.329 0 0);
   --sidebar-ring: oklch(0.7058 0 0);
-  --brand-yellow: oklch(0.8316 0.1453 93.21);
+  --brand: oklch(0.719 0.1322 264.2);
+  --brand-foreground: oklch(0.18 0.04 265);
   --brand-blue: oklch(0.5988 0.1009 260.24);
   --brand-graphite: oklch(0.3197 0.0197 277.11);
   --destructive-foreground: oklch(1 0 0);
