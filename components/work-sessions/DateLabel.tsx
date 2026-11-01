@@ -9,7 +9,7 @@ export default function DateLabel({
 }) {
   return (
     <div className="flex items-center gap-2 my-4">
-      <span className="text-xl font-semibold text-brand-yellow whitespace-nowrap">
+      <span className="text-xl font-semibold text-brand whitespace-nowrap">
         {label}
       </span>
 
